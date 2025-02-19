@@ -8,6 +8,7 @@ from pathlib import Path
 from explore import explorer
 import argparse
 
+
 def find_firmware_root(start_path, required_dirs=None, file_patterns=None, min_score=12):
     dir_weights = {
         'bin': 3, 'sbin': 2, 'lib': 3, 'etc': 2, 
@@ -94,6 +95,17 @@ def extract_firmware_with_binwalk(firmware_path: str, extract_path: str) -> str:
         raise
 
 def process_firmware(input_path: str, output_path: str, extraction_path: str = None):
+    firmware_name = os.path.splitext(os.path.basename(input_path))[0]
+    base_analysis_dir = os.path.join(output_path, firmware_name)
+    
+    os.makedirs(base_analysis_dir, exist_ok=True)
+    
+    analysis_dir = os.path.join(base_analysis_dir, "analysis")
+    extraction_path = os.path.join(base_analysis_dir, "extracted_firmware")
+    
+    os.makedirs(analysis_dir, exist_ok=True)
+    os.makedirs(extraction_path, exist_ok=True)
+
     binwalk_report = ""
     filesystem_root = None
 
@@ -103,9 +115,6 @@ def process_firmware(input_path: str, output_path: str, extraction_path: str = N
     else:
         if not os.path.isfile(input_path):
             raise ValueError(f"Invalid firmware file: {input_path}")
-        
-        if extraction_path is None:
-            extraction_path = os.path.join(output_path, "extracted_firmware")
         
         logging.info(f"Extracting firmware file: {input_path}")
         logging.info(f"Extracting to: {extraction_path}")
@@ -119,7 +128,11 @@ def process_firmware(input_path: str, output_path: str, extraction_path: str = N
     
     logging.info(f"Found filesystem root at: {filesystem_root}")
     
-    return analyze_firmware_content(firmware_dir=filesystem_root, save_path=output_path, binwalk_report=binwalk_report)
+    return analyze_firmware_content(
+        firmware_dir=filesystem_root, 
+        save_path=analysis_dir,
+        binwalk_report=binwalk_report
+    )
 
 def analyze_firmware_content(firmware_dir: str, save_path: str, binwalk_report: str = ""):
     start_time = time.time()
@@ -202,11 +215,9 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    extract_path = os.path.join(args.save_path, "extracted_firmware")
-    
     try:
-        os.makedirs(args.save_path, exist_ok=True)
-        security_report = process_firmware(args.firmware_path, args.save_path, extract_path)
+        security_report = process_firmware(args.firmware_path, args.save_path)
+        
         print(f"\nAnalysis complete. Results saved to: {args.save_path}")
         
     except Exception as e:
