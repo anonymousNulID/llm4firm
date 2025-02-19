@@ -43,7 +43,7 @@ sequenceDiagram
 ## Core Components
 
 ### Main Components
-- **main.py** - System entry point and orchestration
+- **run.py** - System entry point and orchestration
 - **explore.py** - Firmware filesystem exploration engine
 - **analyze.py** - File analysis and security assessment core
 
