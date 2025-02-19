@@ -59,7 +59,7 @@ FirmLLM is an integrated system that combines firmware collection and analysis c
 - `main.py`: System entry point
 - `explore.py`: Firmware exploration
 - `analyze.py`: Firmware file analysis
-  - Shell Command Executor: Support for strings, grep, and other Linux tools
+  - Shell Command Executor: Support for cat, grep, and other Linux tools
   - CVE Query Tool: Support for API interface queries
   - Disassembly Assistant: Integration with radare2 and LLM
   - Sensitive Information Pattern Matching: Code pattern recognition based on regex and semantics
