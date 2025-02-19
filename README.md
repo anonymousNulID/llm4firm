@@ -89,10 +89,10 @@ The requirements.yaml allows users to customize:
 - `summary.txt`: Overall firmware security issues summary and risk level assessment
 
 #### Sample Firmware
-- OpenWrt mainline version
-- D-Link DAP-2690
+- OpenWrt
+- D-Link 
 - MikroTik RouterOS
-- UI firmware
+- Ubiquiti
 
 ## Notes
 
