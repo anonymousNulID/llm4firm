@@ -9,7 +9,7 @@ FirmLLM is an integrated system that combines firmware collection and analysis c
 .
 ├── firmcrawler/       # Firmware Collection System
 ├── firmanalyzer/      # Firmware Analysis System
-└── deepseekSamples/   # Analysis Result Samples
+└── Examples/   # Analysis Result Samples
 ```
 
 ## System Components
