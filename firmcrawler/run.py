@@ -211,7 +211,6 @@ class Explorer(BaseAgent):
                         link_data = json.loads(line.strip())
                         links.extend(link_data.get("links", []))
                     except json.JSONDecodeError:
-                        print(f"解析链接文件时出错: {line}")
                         continue
         return links
 
@@ -238,7 +237,6 @@ class Scraper(BaseAgent):
                         if info:
                             firmware_info = info
                     except json.JSONDecodeError:
-                        print(f"解析固件信息文件时出错: {line}")
                         continue
         
         return firmware_info
@@ -258,7 +256,7 @@ class WebCrawler:
         
         if not save_path:
             self.logger.error("save_path cannot be empty")
-            raise ValueError("save_path不能为空")
+            raise ValueError("save_path cannot be empty")
             
         self.logger.info(f"Crawler configuration:"
                         f"\n - Save path: {save_path}"
