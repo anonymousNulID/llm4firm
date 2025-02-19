@@ -37,6 +37,7 @@ from firmcrawler.crawler import browse
 # ...
 
 prompt_dir = os.path.dirname(os.path.abspath(__file__))
+
 def load_prompts(vendor: str):
     logger = logging.getLogger('Crawler')
     system_prompt_path = os.path.join(prompt_dir, "prompts", "prompts.yaml")
@@ -57,18 +58,22 @@ def load_prompts(vendor: str):
     except yaml.YAMLError as e:
         logger.error(f"Error parsing prompts file: {e}")
         raise
+
 SAVE_PATH = "firmcrawler/output/dlink"
 MAX_DEPTH = 2
 PRODUCT_TYPES = ["EXPLORER", "SCRAPER", "ALL"]
 CRAWL_DELAY = 1
 MAX_CONCURRENT = 3
+
 AGENT_BASE_CONFIG = {
     "save_path": SAVE_PATH,
     "max_steps": 10,
     "retain_human_messages": 0,
     "max_messages": 10
 }
+
 system_prompts, user_prompts = load_prompts("dlink")
+
 INSPECTOR_CONFIG = {
     **AGENT_BASE_CONFIG,
     "system_prompt": system_prompts['inspector']['system'],
@@ -77,14 +82,16 @@ INSPECTOR_CONFIG = {
     "retain_human_messages": 0,
     "max_messages": 6
 }
+
 EXPLORER_CONFIG = {
     **AGENT_BASE_CONFIG, 
     "system_prompt": system_prompts['explorer']['system'],
     "user_input": user_prompts['explorer']['user'],
-    "max_steps": 60,
+    "max_steps": 30,
     "retain_human_messages": 0,
     "max_messages": 12
 }
+
 SCRAPER_CONFIG = {
     **AGENT_BASE_CONFIG,
     "system_prompt": system_prompts['scraper']['system'], 
@@ -93,6 +100,7 @@ SCRAPER_CONFIG = {
     "retain_human_messages": 0,
     "max_messages": 10
 }
+
 class BaseAgent:
     def __init__(self, 
                  system_prompt: str = None,
@@ -114,24 +122,35 @@ class BaseAgent:
         return safe_name[:100] if len(safe_name) > 100 else safe_name
 
     async def run(self, url: str):
-        safe_name = self._get_safe_filename(url)
-        self.save_path = os.path.join(
-            self.base_save_path,
-            f"{self.__class__.__name__}_result",
-            safe_name
-        )
-        os.makedirs(self.save_path, exist_ok=True)
-        
-        return await browse(
-            url=url,
-            system_prompt=self.system_prompt,
-            user_input=self.user_input,
-            save_path=self.save_path,
-            max_steps=self.max_steps,
-            retain_human_messages=self.retain_human_messages,
-            max_messages=self.max_messages,
-            headless=True
-        )
+        logger = logging.getLogger('Crawler')
+        try:
+            safe_name = self._get_safe_filename(url)
+            self.save_path = os.path.join(
+                self.base_save_path,
+                f"{self.__class__.__name__}_result",
+                safe_name
+            )
+            os.makedirs(self.save_path, exist_ok=True)
+            
+            result = await browse(
+                url=url,
+                system_prompt=self.system_prompt,
+                user_input=self.user_input,
+                save_path=self.save_path,
+                max_steps=self.max_steps,
+                retain_human_messages=self.retain_human_messages,
+                max_messages=self.max_messages,
+                headless=True
+            )
+            return result
+        except Exception as e:
+            logger.error(f"Error processing URL {url}: {str(e)}")
+            return {
+                "status": "error",
+                "url": url,
+                "error": str(e),
+                "message": "Processing failed but continuing with next URL"
+            }
 
 class Inspector(BaseAgent):
     def __init__(self, **kwargs):
@@ -192,7 +211,7 @@ class Explorer(BaseAgent):
                         link_data = json.loads(line.strip())
                         links.extend(link_data.get("links", []))
                     except json.JSONDecodeError:
-                        print(f"Error parsing links file: {line}")
+                        print(f"解析链接文件时出错: {line}")
                         continue
         return links
 
@@ -204,11 +223,26 @@ class Scraper(BaseAgent):
         kwargs.setdefault('retain_human_messages', SCRAPER_CONFIG['retain_human_messages'])
         kwargs.setdefault('max_messages', SCRAPER_CONFIG['max_messages'])
         BaseAgent.__init__(self, **kwargs)
-        
+
     async def extract_firmware(self, url: str) -> dict:
         result = await self.run(url)
         print(f"Scraper result: {result}")
-        return result
+        
+        firmware_info = {}
+        firmware_file = os.path.join(self.save_path, "firmware_info.jsonl")
+        if os.path.exists(firmware_file):
+            with open(firmware_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    try:
+                        info = json.loads(line.strip())
+                        if info:
+                            firmware_info = info
+                    except json.JSONDecodeError:
+                        print(f"解析固件信息文件时出错: {line}")
+                        continue
+        
+        return firmware_info
+
 class WebCrawler:
     def __init__(
         self, 
@@ -224,7 +258,7 @@ class WebCrawler:
         
         if not save_path:
             self.logger.error("save_path cannot be empty")
-            raise ValueError("save_path cannot be empty")
+            raise ValueError("save_path不能为空")
             
         self.logger.info(f"Crawler configuration:"
                         f"\n - Save path: {save_path}"
