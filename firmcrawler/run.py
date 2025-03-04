@@ -229,15 +229,16 @@ class Scraper(BaseAgent):
         
         firmware_info = {}
         firmware_file = os.path.join(self.save_path, "firmware_info.jsonl")
-        if os.path.exists(firmware_file):
-            with open(firmware_file, "r", encoding="utf-8") as f:
-                for line in f:
-                    try:
-                        info = json.loads(line.strip())
-                        if info:
-                            firmware_info = info
-                    except json.JSONDecodeError:
-                        continue
+        
+        if result:
+            try:
+                with open(firmware_file, "a", encoding="utf-8") as f:
+                    if isinstance(result, dict):
+                        result['source_url'] = url
+                    f.write(json.dumps(result, ensure_ascii=False) + '\n')
+                firmware_info = result 
+            except Exception as e:
+                print(f"Error saving firmware info: {str(e)}")
         
         return firmware_info
 
