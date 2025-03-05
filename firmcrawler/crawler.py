@@ -506,7 +506,7 @@ class OpenAIRateLimiter:
         self.semaphore = asyncio.Semaphore(1)
         self.last_request_time = 0
         self.lock = asyncio.Lock()
-        print("初始化 Rate Limiter: 每分钟最多100个请求，请求间隔0.6秒")
+        print("Initializing Rate Limiter: Max 100 requests per minute, interval 0.6 seconds")
 
     async def acquire(self):
         async with self.lock:
@@ -515,7 +515,7 @@ class OpenAIRateLimiter:
                 elapsed = current_time - self.last_request_time
                 if elapsed < self.interval:
                     wait_time = self.interval - elapsed
-                    print(f"等待 {wait_time:.2f} 秒后发下一个请求...")
+                    print(f"Waiting {wait_time:.2f} seconds before next request...")
                     await asyncio.sleep(wait_time)
             self.last_request_time = time.time()
         await self.semaphore.acquire()
@@ -526,6 +526,7 @@ class OpenAIRateLimiter:
     async def __aenter__(self):
         await self.acquire()
         return self
+        
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.release()
 
