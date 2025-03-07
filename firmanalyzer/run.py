@@ -7,6 +7,8 @@ import subprocess
 from pathlib import Path
 from explore import explorer
 import argparse
+from LogManage import LogManager
+import configparser
 
 
 def find_firmware_root(start_path, required_dirs=None, file_patterns=None, min_score=12):
@@ -77,9 +79,20 @@ def extract_firmware_with_binwalk(firmware_path: str, extract_path: str) -> str:
     try:
         firmware_name = os.path.splitext(os.path.basename(firmware_path))[0]
         firmware_extract_path = os.path.join(extract_path, firmware_name)
+        
+        if os.path.exists(firmware_extract_path):
+            import shutil
+            shutil.rmtree(firmware_extract_path)
+            
         os.makedirs(firmware_extract_path, exist_ok=True)
         
-        cmd = f"binwalk -Me '{firmware_path}' --directory '{firmware_extract_path}'"
+        config = configparser.ConfigParser()
+        config_path = os.path.join(os.path.dirname(__file__), 'config.ini')
+        config.read(config_path)
+        
+        binwalk_path = config.get('Settings', 'RustBinwalkPath', fallback='binwalk')
+        
+        cmd = f"'{binwalk_path}' -Me '{firmware_path}' --directory '{firmware_extract_path}'"
         process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         
@@ -95,6 +108,10 @@ def extract_firmware_with_binwalk(firmware_path: str, extract_path: str) -> str:
         raise
 
 def process_firmware(input_path: str, output_path: str, extraction_path: str = None):
+    log_path = os.path.join(output_path, 'logs')
+    LogManager.setup(log_path)
+    logger = LogManager.get_logger('FirmwareProcessor')
+    
     firmware_name = os.path.splitext(os.path.basename(input_path))[0]
     base_analysis_dir = os.path.join(output_path, firmware_name)
     
@@ -110,23 +127,23 @@ def process_firmware(input_path: str, output_path: str, extraction_path: str = N
     filesystem_root = None
 
     if os.path.isdir(input_path):
-        logging.info(f"Input is an extracted firmware directory, analyzing directly: {input_path}")
+        logger.info(f"Input is an extracted firmware directory, analyzing directly: {input_path}")
         filesystem_root = find_firmware_root(input_path)
     else:
         if not os.path.isfile(input_path):
             raise ValueError(f"Invalid firmware file: {input_path}")
         
-        logging.info(f"Extracting firmware file: {input_path}")
-        logging.info(f"Extracting to: {extraction_path}")
+        logger.info(f"Extracting firmware file: {input_path}")
+        logger.info(f"Extracting to: {extraction_path}")
         binwalk_report = extract_firmware_with_binwalk(input_path, extraction_path)
         
-        logging.info("Locating filesystem root in extracted firmware...")
+        logger.info("Locating filesystem root in extracted firmware...")
         filesystem_root = find_firmware_root(extraction_path)
 
     if not filesystem_root:
         raise ValueError("Could not locate valid filesystem root directory")
     
-    logging.info(f"Found filesystem root at: {filesystem_root}")
+    logger.info(f"Found filesystem root at: {filesystem_root}")
     
     return analyze_firmware_content(
         firmware_dir=filesystem_root, 
@@ -160,9 +177,9 @@ def analyze_firmware_content(firmware_dir: str, save_path: str, binwalk_report: 
         root_logger.addHandler(file_handler)
         root_logger.addHandler(console_handler)
         
-        logging.info("Logging initialized successfully")
-        logging.info(f"Analyzing firmware in: {firmware_dir}")
-        logging.info(f"Saving results to: {save_path}")
+        root_logger.info("Logging initialized successfully")
+        root_logger.info(f"Analyzing firmware in: {firmware_dir}")
+        root_logger.info(f"Saving results to: {save_path}")
         
     except Exception as e:
         print(f"Failed to initialize logging: {str(e)}")
@@ -208,6 +225,18 @@ def analyze_firmware_content(firmware_dir: str, save_path: str, binwalk_report: 
     
     return security_report
 
+def main(firmware_path, save_path):
+    try:
+        security_report = process_firmware(firmware_path, save_path)
+        
+        print(f"\nAnalysis complete. Results saved to: {save_path}")
+        
+        return security_report
+        
+    except Exception as e:
+        print(f"Error during firmware analysis: {str(e)}")
+        raise
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Firmware Analysis Tool')
     parser.add_argument('firmware_path', help='Path to firmware file or extracted firmware directory')
@@ -215,11 +244,4 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    try:
-        security_report = process_firmware(args.firmware_path, args.save_path)
-        
-        print(f"\nAnalysis complete. Results saved to: {args.save_path}")
-        
-    except Exception as e:
-        print(f"Error during firmware analysis: {str(e)}")
-        raise
+    main(args.firmware_path, args.save_path)
