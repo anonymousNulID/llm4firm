@@ -40,10 +40,3 @@
 | usbcore.ko | Spectre vulnerability (CVE-2019-15902) |
 
 
-### Configuration Issues
-- Exposed sensitive IPs and URLs in firewall config
-- Hardcoded DNS servers and NXDomain IPs
-- Insecure default configurations
-- Version information leakage
-
-
