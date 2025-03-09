@@ -1,5 +1,4 @@
-'''
-Firmware Summary:
+Firmware Summary:[Coverage] bin/sbin
 [Basic Info]
 - Name/Version: Firmware version 1.28.4 (BusyBox)
 - Device/Type/Arch: Generic embedded device, SquashFS file system
@@ -36,4 +35,3 @@ Firmware Summary:
 
 [Attack Surface]
 - Attack Points: Vulnerabilities in /bin/busybox, /bin/opkg, /bin/uclient-fetch, /sbin/init, /sbin/mtd, /sbin/netifd, /sbin/rpcd, /sbin/uci, /sbin/logread, /bin/config_generate, /sbin/wifi, and /sbin/hotplug-call expose the system to remote code execution, command injection, memory corruption, privilege escalation, and unauthorized access attacks via malicious inputs, environment manipulation, or default credential exploitation.
-'''
