@@ -31,7 +31,7 @@ def get_api_key():
     config = configparser.ConfigParser()
     config.read('./firmcrawler/config.ini')
     try:
-        return config['Settings']['Model'], config['Settings']['ModelApiKey'], config['Settings']['OrgId'], config['Settings']['ProjectId'], config['Settings']['BaseURL']
+        return config['Settings']['Model'], config['Settings']['ModelApiKey']
     except KeyError:
         raise KeyError("Cannot find 'ModelApiKey' in 'Settings' section of config.ini")
 
