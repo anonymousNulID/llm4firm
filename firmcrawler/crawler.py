@@ -612,7 +612,7 @@ async def browse(url, system_prompt, user_input, save_path=None, max_steps=20, r
         browser = await p.chromium.launch(
             headless=headless,
             args=[
-                "--window-size=1920,1080",
+                "--window-size=1280,720",
                 "--force-device-scale-factor=1.0",
                 "--disable-dev-shm-usage",
                 "--no-sandbox"
@@ -620,7 +620,7 @@ async def browse(url, system_prompt, user_input, save_path=None, max_steps=20, r
             downloads_path=downloads_path
         )
         context = await browser.new_context(
-            viewport={'width': 1920, 'height': 1080},
+            viewport={'width': 1280, 'height': 720},
             device_scale_factor=1.0
         )
         page = await context.new_page()
