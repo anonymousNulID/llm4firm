@@ -108,14 +108,14 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
   Compared to static analysis tools (Binwalk, Ghidra):
   - Limited understanding of indirect function calls in binary code
   - Challenges with vendor-specific compiler optimizations
-  - Requires manual verification for complex control flows (42% of analysis results need expert review)
+  - Requires manual verification for complex control flows
 
 ### 2. Experimental Validation Difficulties
 - **Penetration Testing Constraints**:
   - Physical device requirements for vulnerability reproduction (avg. 3-7 days/firmware vs 4-8 hours analysis)
   - **Persistent Emulation Challenges**:
-    - Limited success rate (68%) for full-system emulation even using Firmae
-    - 32% of firmware images require manual intervention during boot process
+    - Limited success rate for full-system emulation even using Firmae
+    - firmware images require manual intervention during boot process
     - Hardware peripheral simulation gaps affect service validation
   - Limited ground truth data for IoT vulnerability benchmarks
 
@@ -134,7 +134,6 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 - **Scope Boundaries**:
   - Excludes low-level hardware interaction analysis
   - Limited to firmware packages <2GB due to memory constraints
-  - Web interface analysis currently supports 85% of common CMS frameworks
 
 These challenges highlight three fundamental tensions in firmware analysis:  
 1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources  
