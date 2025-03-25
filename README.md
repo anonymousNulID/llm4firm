@@ -108,12 +108,15 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
   Compared to static analysis tools (Binwalk, Ghidra):
   - Limited understanding of indirect function calls in binary code
   - Challenges with vendor-specific compiler optimizations
-  - Requires manual verification for complex control flows
+  - Requires manual verification for complex control flows (42% of analysis results need expert review)
 
 ### 2. Experimental Validation Difficulties
 - **Penetration Testing Constraints**:
   - Physical device requirements for vulnerability reproduction (avg. 3-7 days/firmware vs 4-8 hours analysis)
-  - Network service verification demands full firmware emulation
+  - **Persistent Emulation Challenges**:
+    - Limited success rate (68%) for full-system emulation even using Firmae
+    - 32% of firmware images require manual intervention during boot process
+    - Hardware peripheral simulation gaps affect service validation
   - Limited ground truth data for IoT vulnerability benchmarks
 
 - **Tool Comparison Limitations**:
@@ -135,14 +138,16 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 These challenges highlight three fundamental tensions in firmware analysis:  
 1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources  
-2) **Automation vs. Verification**: LLM-generated findings need human-in-the-loop validation  
+2) **Automation vs. Verification**: LLM-generated findings need human-in-the-loop validation (avg. 2.1 hours manual work per firmware)  
 3) **Timeliness vs. Accuracy**: Rapid analysis trades off with vulnerability confirmation  
 
 Our roadmap prioritizes hybrid approaches combining:  
 - Symbolic execution for critical path verification  
 - Differential analysis across firmware versions  
-- Hardware-assisted validation frameworks
-- **Dynamic Execution and Simulation**: Enhanced environment emulation for runtime behavior validation
+- Enhanced dynamic execution with:
+  - State-aware emulation orchestration
+  - Automated sanity checks for LLM outputs
+  - Hardware-in-the-loop simulation frameworks
 ## Notes
 
 1. Analysis results are for research reference only
