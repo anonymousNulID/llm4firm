@@ -97,7 +97,7 @@ The requirements.yaml allows users to customize:
 
 While FirmLLM demonstrates significant advancements in firmware analysis compared to existing tools, our approach has the following limitations:
 
-### 1. Semantic Understanding Constraints
+### 1. Format constraints
 - **Configuration Interpretation**:  
   Traditional tools (Firmadyne, FirmWalker, EMBA) lack contextual understanding of configuration semantics. While our LLM-based approach improves this, challenges remain with:
   - Custom encryption/obfuscation implementations
