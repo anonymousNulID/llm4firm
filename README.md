@@ -114,7 +114,7 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 - **Emulation Complexities**:
   Persistent validation hurdles include:
-  - failure rate in full-system emulation (even with FirmAE)
+  - Difficulties in Full System Simulation (even with FirmAE)
 
 - **Verification Overhead**:
   Required manual confirmation processes:
@@ -124,7 +124,7 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 ### 3. Temporal and Technical Constraints
 - **System Limitations**:
-  - Model API rate limits (deepseek) restrict throughput
+  - Model API rate limits restrict throughput
   - Hardware dependencies for specific vendor validation
   - CVE matching latency (24-72h update cycle for NVD database)
 
