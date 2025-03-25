@@ -107,7 +107,6 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 - **LLM-Assisted Analysis Challenges**:
   Our enhanced approach still faces residual difficulties with:
   - Proprietary encryption/obfuscation schemes requiring manual key extraction
-  - Undocumented configuration dialects needing custom parsers
   - Multi-stage call chains (>15 hops) demanding preliminary static screening
   - Potential semantic hallucinations in complex control flow analysis
 
