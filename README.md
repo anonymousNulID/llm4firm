@@ -99,7 +99,7 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 ### 1. Semantic Understanding Constraints
 - **Configuration Interpretation**:  
-  Traditional tools (Firmadyne, FirmWalker) lack contextual understanding of configuration semantics. While our LLM-based approach improves this, challenges remain with:
+  Traditional tools (Firmadyne, FirmWalker, EMBA) lack contextual understanding of configuration semantics. While our LLM-based approach improves this, challenges remain with:
   - Custom encryption/obfuscation implementations
   - Non-standard configuration formats without documentation
   - Potential hallucinations in configuration parsing
@@ -124,7 +124,7 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 ### 3. Temporal and Technical Constraints
 - **System Limitations**:
-  - Model API rate limits (5 RPM for GPT-4) restrict throughput
+  - Model API rate limits (deepseek) restrict throughput
   - Hardware dependencies for specific vendor validation
   - CVE matching latency (24-72h update cycle for NVD database)
 
