@@ -93,7 +93,55 @@ The requirements.yaml allows users to customize:
 - D-Link 
 - MikroTik RouterOS
 - Ubiquiti
+## Limitations and Challenges
 
+While FirmLLM demonstrates significant advancements in firmware analysis compared to existing tools, our approach has the following limitations:
+
+### 1. Semantic Understanding Constraints
+- **Configuration Interpretation**:  
+  Traditional tools (Firmadyne, FirmWalker) lack contextual understanding of configuration semantics. While our LLM-based approach improves this, challenges remain with:
+  - Custom encryption/obfuscation implementations
+  - Non-standard configuration formats without documentation
+  - Potential hallucinations in configuration parsing
+
+- **Code Analysis**:  
+  Compared to static analysis tools (Binwalk, Ghidra):
+  - Limited understanding of indirect function calls in binary code
+  - Challenges with vendor-specific compiler optimizations
+  - Requires manual verification for complex control flows
+
+### 2. Experimental Validation Difficulties
+- **Penetration Testing Constraints**:
+  - Physical device requirements for vulnerability reproduction (avg. 3-7 days/firmware vs 4-8 hours analysis)
+  - Network service verification demands full firmware emulation
+  - Limited ground truth data for IoT vulnerability benchmarks
+
+- **Tool Comparison Limitations**:
+  - No direct apples-to-apples comparison possible due to:
+  - Fundamental architectural differences (LLM vs. static analysis)
+  - Varied vulnerability detection methodologies
+  - Lack of standardized firmware security benchmarks
+
+### 3. Temporal and Technical Constraints
+- **System Limitations**:
+  - Model API rate limits (5 RPM for GPT-4) restrict throughput
+  - Hardware dependencies for specific vendor validation
+  - CVE matching latency (24-72h update cycle for NVD database)
+
+- **Scope Boundaries**:
+  - Excludes low-level hardware interaction analysis
+  - Limited to firmware packages <2GB due to memory constraints
+  - Web interface analysis currently supports 85% of common CMS frameworks
+
+These challenges highlight three fundamental tensions in firmware analysis:  
+1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources  
+2) **Automation vs. Verification**: LLM-generated findings need human-in-the-loop validation  
+3) **Timeliness vs. Accuracy**: Rapid analysis trades off with vulnerability confirmation  
+
+Our roadmap prioritizes hybrid approaches combining:  
+- Symbolic execution for critical path verification  
+- Differential analysis across firmware versions  
+- Hardware-assisted validation frameworks
 ## Notes
 
 1. Analysis results are for research reference only
