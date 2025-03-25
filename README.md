@@ -29,7 +29,7 @@ FirmLLM is an integrated system that combines firmware collection and analysis f
 - TP-Link:
   - English: `https://www.tp-link.com/hk/support/download/`
   - Chinese: `https://resource.tp-link.com.cn/?productorlist=0`
-- UI: `https://www.ui.com/download/`
+- UI: `[https://www.ui.com/download/](https://www.ui.com/download/releases/firmware)`
 - Zyxel: `https://www.zyxel.com/global/en/products`
 
 #### Main Features
