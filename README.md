@@ -147,3 +147,4 @@ Our roadmap prioritizes hybrid approaches combining:
 1. Analysis results are for research reference only
 2. Please comply with relevant laws and regulations
 3. Verification in test environment is recommended
+4. 	- **Dynamic Execution and Simulation**: Enhanced environment emulation for runtime behavior validation
