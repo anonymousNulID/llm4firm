@@ -120,13 +120,11 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 - **Emulation Complexities**:
   Persistent validation hurdles include:
-  - 68% failure rate in full-system emulation (even with Firmae)
-  - Mandatory manual input for 42% of firmware boot sequences
-  - Peripheral simulation gaps affecting 31% of service validations
+  - failure rate in full-system emulation (even with FirmAE)
 
 - **Verification Overhead**:
   Required manual confirmation processes:
-  - Average 16.7h per firmware for LLM output sanity checks
+  - Average 3-5 h per firmware for LLM output sanity checks
   - 3-5 day physical device testing cycles for PoC verification
   - Multi-vendor hardware dependencies for vulnerability reproduction
 
