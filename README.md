@@ -136,7 +136,6 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 - **Scope Boundaries**:
   - Excludes low-level hardware interaction analysis
-  - Limited to firmware packages <2GB due to memory constraints
 
 These challenges highlight three fundamental tensions in firmware analysis:  
 1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources  
