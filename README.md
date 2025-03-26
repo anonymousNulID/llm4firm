@@ -102,7 +102,7 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 - **LLM-Assisted Analysis Challenges**:
   Our enhanced approach still faces residual difficulties with:
   - Proprietary encryption/obfuscation schemes requiring manual key extraction
-  - Multi-stage call chains demanding preliminary static screening
+  - Preliminary static screening (via disassembly to examine all call chains in the binary) is necessary for multi-stage call chains.
   - Potential semantic hallucinations in complex control flow analysis
 
 ### 2. Experimental Validation Difficulties
@@ -132,7 +132,7 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
   - Excludes low-level hardware interaction analysis
 
 These challenges highlight three fundamental tensions in firmware analysis:  
-1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources  （Binary File）
+1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources (via disassembly to examine all call chains in the binary)
 2) **Automation vs. Verification**: LLM-generated findings need human-in-the-loop validation (avg. 2.1 days manual work per firmware)  
 3) **Timeliness vs. Accuracy**: Rapid analysis trades off with vulnerability confirmation  
 
