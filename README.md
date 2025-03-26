@@ -133,7 +133,7 @@ While FirmLLM demonstrates significant advancements in firmware analysis compare
 
 These challenges highlight three fundamental tensions in firmware analysis:  
 1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources (via disassembly to examine all call chains in the binary)
-2) **Automation vs. Verification**: LLM-generated findings need human-in-the-loop validation (avg. at least 5.1 days manual work per firmware)  
+2) **Automation vs. Verification**: LLM-generated findings need human-in-the-loop validation (avg. at least 5 days manual work per firmware)  
 3) **Timeliness vs. Accuracy**: Rapid analysis trades off with vulnerability confirmation  
 
 Our roadmap prioritizes hybrid approaches combining:  
