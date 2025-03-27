@@ -504,7 +504,7 @@ Note: Only select functions from the provided list above. Do not include any oth
                     max_iterations=8,
                     target_functions=target_funcs # Pass target functions to analyzer
                 )
-                result = analyzer.analyze_binary()
+                result = analyzer.analyze_binary_parallel()
                 result_queue.put(result)
             except Exception as e:
                 result_queue.put(f"Error: {str(e)}")
