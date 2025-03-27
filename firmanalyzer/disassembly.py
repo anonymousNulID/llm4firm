@@ -1128,7 +1128,7 @@ Notice:
             
             filtered_results = [
                 result for result in all_results
-                if result.get('risk_level', '').upper() in ['CRITICAL']
+                if result.get('risk_level', '').upper() in ['CRITICAL', 'HIGH']
             ]
             
             return json.dumps(filtered_results, ensure_ascii=False, indent=2)
