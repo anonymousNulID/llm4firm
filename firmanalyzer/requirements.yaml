@@ -2,7 +2,7 @@ file_requirements:
   user: |
     - Core System Components
       * Basic Tools
-        - Contains basic command tools (e.g. cp, mv, echo)
+        - Contains basic command tools
         - If supporting parameters or called by scripts, mark as "potential input point"
 
       * System Libraries
