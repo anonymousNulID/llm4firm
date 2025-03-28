@@ -32,7 +32,7 @@ The system consists of two main modules:
 
 ## 🕸️ Firmware Collection System (FirmCrawler)
 
-firmcrawler is used for automated collection of firmware files from various manufacturers. The system is built upon and optimized from [WebVoyager](https://langchain-ai.github.io/langgraph/tutorials/web-navigation/web_voyager/) [[paper]](https://arxiv.org/abs/2401.13919), implementing a multi-agent collaboration system for large-scale firmware collection. WebVoyager is an innovative Large Multimodal Model (LMM) powered web agent that can complete user instructions end-to-end by interacting with real-world websites.
+**FirmCrawler** is used for automated collection of firmware files from various manufacturers. The system is built upon and optimized from [WebVoyager](https://langchain-ai.github.io/langgraph/tutorials/web-navigation/web_voyager/) [[paper]](https://arxiv.org/abs/2401.13919), implementing a multi-agent collaboration system for large-scale firmware collection. WebVoyager is an innovative Large Multimodal Model (LMM) powered web agent that can complete user instructions end-to-end by interacting with real-world websites.
 
 ### ✅ Supported Vendors and URLs
 
@@ -66,7 +66,7 @@ firmcrawler is used for automated collection of firmware files from various manu
 
 ## 🔍 Firmware Analysis System (FirmAnalyzer)
 
-Combines conventional static analysis, symbolic execution, and LLM-based reasoning to offer in-depth firmware security evaluation.
+**FirmAnalyzer** provides comprehensive firmware security analysis capabilities.
 
 ### 🛠️ Key Capabilities
 
