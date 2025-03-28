@@ -96,13 +96,14 @@ file_findings_requirements:
 
     **Severity Rating**
     - Level 5 (Critical):
-      - Input source → No validation → Dangerous function → Can execute
+      - Reachable input → No validation → Dangerous function → Executable path
     - Level 4 (High):
-      - Controllable input + Data leakage + Weak configuration
+      - Controllable input + Sensitive exposure or weak protection
     - Level 3 (Medium):
-      - Vulnerability exists but path unclear/uncontrollable
-    - Level 0-2 (Low):
-      - No exploit path, only information leakage or configuration warnings
+      - Known flaw exists but lacks reachable or controllable path
+    - Level 0–2 (Low):
+      - Informational findings, debug data, or misconfigurations with no clear exploit vector
+
 
 security_report_template:
   user: |
