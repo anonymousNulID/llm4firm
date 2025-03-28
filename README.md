@@ -144,12 +144,6 @@ DeepSeek offers lower costs, but we are actively experimenting and comparing res
 - CVE data synchronization delays due to NVD refresh cycles  
 - No modeling of low-level hardware interactions
 
-### Core Tensions in Firmware Security
-
-1. **Comprehensiveness vs. Precision**  
-2. **Automation vs. Human Validation**  
-3. **Timeliness vs. Accuracy**
-
 ---
 
 ## 🚧 Roadmap
