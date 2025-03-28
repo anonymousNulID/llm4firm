@@ -130,8 +130,8 @@ def process_firmware(input_path: str, output_path: str):
     logger = LogManager.get_logger('FirmwareProcessor')
     firmware_name = os.path.splitext(os.path.basename(input_path))[0]
     base_dir = os.path.join(output_path, firmware_name)
-    analysis_dir = os.path.join(base_dir, "analysis")
-    extraction_dir = os.path.join(base_dir, "extracted_firmware")
+    analysis_dir = os.path.join(base_dir, "log")
+    extraction_dir = os.path.join(base_dir, "extracted")
 
     os.makedirs(analysis_dir, exist_ok=True)
     os.makedirs(extraction_dir, exist_ok=True)
