@@ -1,9 +1,21 @@
-# FirmLLM - A Large Language Model-based Multi-Agent System for Large-scale Firmware Collection and Analysis
+# FirmLLM
 
-FirmLLM is an integrated system that combines firmware collection and analysis functions, leveraging large language models (LLM) for intelligent firmware analysis. The system consists of two core modules: the firmware collection system (FirmCrawler) and the firmware analysis system (FirmAnalyzer). Both systems adopt a multi-agent collaborative approach based on user-defined prompts, enabling autonomous exploration and analysis, and can solve long-cycle complex tasks.
+A Multi-Agent System for Large-Scale Firmware Collection and Analysis Based on Large Language Models
 
+---
 
-## Project Structure
+## Overview
+
+**FirmLLM** is an integrated system for large-scale firmware acquisition and security analysis. It leverages multi-agent collaboration and large language models (LLMs) to achieve intelligent automation in both crawling and analysis.
+
+The system consists of two main modules:
+
+- **FirmCrawler**: A multi-agent web crawler for automated firmware collection  
+- **FirmAnalyzer**: A firmware security analysis engine that combines static tools and LLM capabilities
+
+---
+
+## 📁 Project Structure
 
 ```
 .
@@ -12,140 +24,140 @@ FirmLLM is an integrated system that combines firmware collection and analysis f
 └── Examples/   # Analysis Result Samples
 ```
 
-## System Components
 
-### 1. Firmware Collection System (FirmCrawler)
+---
 
-`firmcrawler` is used for automated collection of firmware files from various manufacturers. The system is built upon and optimized from [WebVoyager](https://langchain-ai.github.io/langgraph/tutorials/web-navigation/web_voyager/) [[paper]](https://arxiv.org/abs/2401.13919), implementing a multi-agent collaboration system for large-scale firmware collection. WebVoyager is an innovative Large Multimodal Model (LMM) powered web agent that can complete user instructions end-to-end by interacting with real-world websites.
+## 🕸️ Firmware Collection System (FirmCrawler)
 
-#### Vendor URL
-- D-Link: `https://support.dlink.com/AllPro.aspx`
-- Foscam: `https://www.foscam.com/download-center/firmware-downloads.html`
-- Mercury: `http://service.mercurycom.com.cn/download-list.html`
-- MikroTik: `https://www.mikrotik.com/download`
-- OpenWrt: `https://downloads.openwrt.org/releases/`
-- QNAP: `https://www.qnap.com/en/download/`
-- Supermicro: `https://www.supermicro.com/zh_cn/products/motherboards/embedded-iot-boards`
-- TP-Link:
-  - English: `https://www.tp-link.com/hk/support/download/`
-  - Chinese: `https://resource.tp-link.com.cn/?productorlist=0`
-- UI: `https://www.ui.com/download/releases/firmware`
-- Zyxel: `https://www.zyxel.com/global/en/products`
+Based on [WebVoyager](https://langchain-ai.github.io/langgraph/tutorials/web-navigation/web_voyager/) [[paper]](https://arxiv.org/abs/2401.13919), FirmCrawler enables intelligent interaction with vendor websites to automatically locate and download firmware files.
 
-#### Main Features
-- Automated web interaction and downloads
-- Intelligent firmware information collection
-- Multi-agent collaboration for parallel crawling
+### ✅ Supported Vendors and URLs
+
+- **D-Link**: https://support.dlink.com/AllPro.aspx  
+- **Foscam**: https://www.foscam.com/download-center/firmware-downloads.html  
+- **Mercury**: http://service.mercurycom.com.cn/download-list.html  
+- **MikroTik**: https://www.mikrotik.com/download  
+- **OpenWrt**: https://downloads.openwrt.org/releases/  
+- **QNAP**: https://www.qnap.com/en/download/  
+- **Supermicro**: https://www.supermicro.com/zh_cn/products/motherboards/embedded-iot-boards  
+- **TP-Link (English)**: https://www.tp-link.com/hk/support/download/  
+- **TP-Link (Chinese)**: https://resource.tp-link.com.cn/?productorlist=0  
+- **Ubiquiti (UI)**: https://www.ui.com/download/releases/firmware  
+- **Zyxel**: https://www.zyxel.com/global/en/products  
+
+### 🔧 Key Features
+
+- Autonomous interaction with vendor sites  
+- Intelligent firmware file identification and retrieval  
+- Multi-agent concurrent crawling  
 - Distributed task scheduling
 
-#### Core Files
-- `crawler.py`: Core crawler implementation based on WebVoyager
-- `web_intrect.py`: Web interaction module
-- `mark_page.js`: Page marking script
-- `prompt.yaml`: Vendor-specific customized prompts for intelligent crawling
+### 📄 Core Files
 
-### 2. Firmware Analysis System (FirmAnalyzer)
+- `crawler.py`: Core crawler logic  
+- `web_intrect.py`: Web interaction controller  
+- `mark_page.js`: Web element tagging script  
+- `prompt.yaml`: Vendor-specific prompt configuration for LLM
 
-`firmanalyzer` provides comprehensive firmware security analysis capabilities.
+---
 
-#### Main Features
-- Firmware unpacking and filesystem identification
-- Static analysis and vulnerability detection
-- Binary analysis
-- CVE vulnerability matching
-- Security risk assessment
+## 🔍 Firmware Analysis System (FirmAnalyzer)
 
-#### Core Files
-- `run.py`: System entry point
-- `explore.py`: Firmware exploration
-- `analyze.py`: Firmware file analysis
-  - Shell Command Executor: Support for cat, grep, and other Linux tools
-  - CVE Query Tool: Support for API interface queries
-  - Disassembly Assistant: Integration with radare2 and LLM
-  - Sensitive Information Pattern Matching: Code pattern recognition based on regex and semantics
+Combines conventional static analysis, symbolic execution, and LLM-based reasoning to offer in-depth firmware security evaluation.
 
-The requirements.yaml allows users to customize:
-- Analysis scope and target components
-- Directory scanning priorities
-- Security analysis strategies
-- Risk severity classifications
-- Report and summary formats
+### 🛠️ Key Capabilities
 
-#### Data Sources
-- FirmSec Dataset: https://github.com/NESA-Lab/FirmSecDataset
+- Firmware unpacking and filesystem detection  
+- Static and semantic vulnerability detection  
+- Binary disassembly and logic analysis  
+- CVE correlation and risk scoring  
+- Human-readable reports powered by LLMs
 
-### 3. Analysis Result Samples
+### 📄 Core Files
 
-`Examples` contains analysis results using DeepSeek-v3 and DeepSeek-r1 models.
+- `run.py`: Entry point for analysis  
+- `explore.py`: Filesystem exploration and metadata gathering  
+- `analyze.py`: Firmware file analysis module  
+  - **Sensitive Info Pattern Matching**: Regex and semantic pattern detection (preliminary filtering to guide LLM inspection and direction)  
+  - **Shell Command Executor**: Executes Linux tools such as `cat`, `grep`, etc.  
+  - **CVE Query Tool**: Queries vulnerability data through APIs  
+  - **Disassembly Assistant**: Integrates `radare2` with LLM for binary reasoning
 
-#### Analysis Logs and Reports
-- `explore.log`: Complete firmware analysis process example
-- `report.txt`: Detailed security analysis report by file
-- `summary.txt`: Overall firmware security issues summary and risk level assessment
+### 🔌 Data Sources
 
-#### Sample Firmware
-- OpenWrt
-- D-Link 
-- MikroTik RouterOS
-- Ubiquiti
-## Limitations and Challenges
+- [FirmSec Dataset](https://github.com/NESA-Lab/FirmSecDataset)
 
-While FirmLLM demonstrates significant advancements in firmware analysis compared to existing tools, our approach has the following limitations:
+---
 
-### 1. Format Constraints
-- **Legacy Tool Limitations**:  
-  Traditional analysis tools (Firmadyne, FirmWalker, EMBA) exhibit three key shortcomings:
-  - **Configuration Blindspots**: Inability to contextually interpret configuration files and initialization scripts
-  - **Script Comprehension Gaps**: Limited semantic understanding of build scripts and service definitions
-  - **Code Review Deficits**: No capability for cross-file code reasoning during security audits
+## 📊 Example Outputs (Examples)
 
-- **LLM-Assisted Analysis Challenges**:
-  Our enhanced approach still faces residual difficulties with:
-  - Proprietary encryption/obfuscation schemes requiring manual key extraction
-  - Preliminary static screening (via disassembly to examine all call chains in the binary) is necessary for multi-stage call chains.
-  - Potential semantic hallucinations in complex control flow analysis
+Contains complete logs and reports from analyzing firmware using **DeepSeek-v3** and **DeepSeek-r1** models.
 
-### 2. Experimental Validation Difficulties
-- **Benchmarking Limitations**:
-  Fundamental experimental challenges stem from:
-  - Absence of standardized firmware security benchmarks
-  - Disparity in vulnerability detection criteria across tools
-  - Inconsistent ground truth data for IoT CVEs
+### 📝 Files
 
-- **Emulation Complexities**:
-  Persistent validation hurdles include:
-  - Difficulties in Full System Simulation (even with FirmAE)
+- `explore.log`: Full exploration log  
+- `report.txt`: File-by-file security analysis  
+- `summary.txt`: Overall security summary and risk level
 
-- **Verification Overhead**:
-  Required manual confirmation processes:
-  - Average 3-5 h per firmware for LLM output sanity checks
-  - 3-5 day physical device testing cycles for PoC verification
-  - Multi-vendor hardware dependencies for vulnerability reproduction
+### 🧪 Firmware Examples
 
-### 3. Temporal and Technical Constraints
-- **System Limitations**:
-  - Model API rate limits restrict throughput
-  - Hardware dependencies for specific vendor validation
-  - CVE matching latency (24-72h update cycle for NVD database)
+- OpenWrt  
+- D-Link  
+- MikroTik RouterOS  
+- Ubiquiti  
 
-- **Scope Boundaries**:
-  - Excludes low-level hardware interaction analysis
+### 🤖 Model Performance Notes
 
-These challenges highlight three fundamental tensions in firmware analysis:  
-1) **Comprehensiveness vs. Precision**: Full semantic understanding requires impractical computational resources (via disassembly to examine all call chains in the binary)
-2) **Automation vs. Verification**: LLM-generated findings need human-in-the-loop validation (avg. at least 5 days manual work per firmware)  
-3) **Timeliness vs. Accuracy**: Rapid analysis trades off with vulnerability confirmation  
+We primarily use **DeepSeek-v3** and **DeepSeek-r1** for firmware analysis.  
+However, our experiments have shown that **Claude-Sonnet** demonstrates promising performance in code auditing tasks, especially for semantic reasoning and cross-file logic analysis.
 
-Our roadmap prioritizes hybrid approaches combining:  
-- Symbolic execution for critical path verification  
-- Differential analysis across firmware versions  
-- Enhanced dynamic execution with:
-  - State-aware emulation orchestration
-  - Automated sanity checks for LLM outputs
-  - Hardware-in-the-loop simulation frameworks
-## Notes
+DeepSeek offers lower costs, but we are actively experimenting and comparing results across multiple models to find the optimal configuration.
 
-1. Analysis results are for research reference only
-2. Please comply with relevant laws and regulations
-3. Verification in test environment is recommended
+---
 
+## ⚠️ Limitations and Challenges
+
+### Format & Semantic Limitations
+
+- Inability to automatically decrypt or handle proprietary firmware formats  
+- LLMs may hallucinate when analyzing complex control flows  
+- Limited understanding of intricate build scripts and service configurations
+
+### Experimental Verification Bottlenecks
+
+- Lack of standardized firmware security benchmarks  
+- Inconsistent vulnerability reporting ground truth  
+- Physical device validation may take 3–5 days per firmware
+
+### Technical Constraints
+
+- LLM API rate limits reduce processing parallelism  
+- CVE data synchronization delays due to NVD refresh cycles  
+- No modeling of low-level hardware interactions
+
+### Core Tensions in Firmware Security
+
+1. **Comprehensiveness vs. Precision**  
+2. **Automation vs. Human Validation**  
+3. **Timeliness vs. Accuracy**
+
+---
+
+## 🚧 Roadmap
+
+Upcoming work will focus on:
+
+- **Integrating more static analysis tools**, especially for binary-focused workflows to improve analysis coverage and accuracy  
+- **Combining symbolic execution with LLMs** to enhance deep vulnerability discovery and validation  
+- **Exploring firmware runtime state analysis** (e.g., process behavior, service call graphs, and system responses) to prioritize high-risk issues
+
+---
+
+## 📌 Notes & Compliance
+
+1. All results are for **research purposes only**  
+2. Please ensure legal and ethical use of the system  
+3. Verification should be performed in sandboxed/test environments  
+4. We are actively engaging with vendors to confirm findings and, under compliant conditions, release more security reports
+
+---
