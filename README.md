@@ -84,8 +84,14 @@ The system consists of two main modules:
   - **Sensitive Info Pattern Matching**: Regex and semantic pattern detection (preliminary filtering to guide LLM inspection and direction)  
   - **Shell Command Executor**: Executes Linux tools such as `cat`, `grep`, etc.  
   - **CVE Query Tool**: Queries vulnerability data through APIs  
-  - **Disassembly Assistant**: Integrates `radare2` with LLM for binary reasoning
-
+  - **Disassembly Assistant**: Integrates `radare2` with LLM for binary reasoning  
+- `requirements.yaml`: A user-configurable file that defines the overall analysis plan. It allows users to customize:
+  - The **scope of analysis** and specific **target components**  
+  - **Directory scanning priorities** (e.g., focus on `/etc`, `/bin`, or `/www`)  
+  - **Security analysis strategies**, such as whether to perform code-level audits or pattern-based detections  
+  - **Risk severity classification rules** to define what constitutes high/medium/low severity  
+  - The **format and structure** of generated **reports and summaries**
+  - 
 ### 🔌 Data Sources
 
 - [FirmSec Dataset](https://github.com/NESA-Lab/FirmSecDataset)
