@@ -103,7 +103,7 @@ This design helps **alleviate the heavy workload typically required from securit
 
 Contains complete logs and reports from analyzing firmware using **DeepSeek-v3** and **DeepSeek-r1** models.
 
-We are actively engaging with vendors to confirm findings and, under compliant conditions, release more security reports
+**We are actively engaging with vendors to confirm findings and, under compliant conditions, release more security reports**
 
 ### 📝 Files
 
