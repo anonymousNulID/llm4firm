@@ -133,11 +133,24 @@ DeepSeek offers lower costs, but we are actively experimenting and comparing res
 - LLMs may hallucinate when analyzing complex control flows  
 - Limited understanding of intricate build scripts and service configurations
 
-### Experimental Verification Bottlenecks
+### 🔬 Experimental Verification Bottlenecks
 
-- Lack of standardized firmware security benchmarks  
-- Inconsistent vulnerability reporting ground truth  
-- Physical device validation may take 3–5 days per firmware
+- **Lack of standardized firmware security benchmarks**  
+  Unlike traditional tools such as **FirmWalker**, **EMBA**, or **Firmadyne**, which rely on predefined rules or pattern-based scanning, FirmLLM performs semantic-level analysis and configuration-aware reasoning using LLMs.  
+  This fundamental difference makes it difficult to perform **direct, objective comparisons**:  
+  - Traditional tools do not provide results with semantic insights or high-level reasoning context  
+  - Key elements such as init scripts, configuration semantics, or cross-file logic are not analyzed by baseline tools  
+  - Manual alignment is often required to interpret whether the findings are equivalent, resulting in **labor-intensive, subjective validation**
+
+- **Inconsistent vulnerability reporting ground truth**  
+  IoT CVEs are often poorly documented, vendor-disclosed without detail, or reported under different naming conventions across platforms.
+
+- **Physical device validation overhead**  
+  Verifying discovered vulnerabilities may require:
+  - Flashing and sandboxing physical devices  
+  - Simulating exploit conditions  
+  - Multi-vendor coordination and specialized hardware setups  
+  This process can take **3–5 days per firmware** on average.
 
 ### Technical Constraints
 
