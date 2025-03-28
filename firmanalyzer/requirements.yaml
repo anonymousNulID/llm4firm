@@ -1,39 +1,39 @@
 file_requirements:
   user: |
-    - Core System Components
-      * Basic Tools
-        - Contains basic command tools
-        - If supporting parameters or called by scripts, mark as "potential input point"
+    - Focus analysis on files that can be externally triggered, accept user input, or impact system behavior. Prioritize files that meet **any** of the following conditions:
 
-      * System Libraries
-        - Core/shared/dynamic link libraries
-        - Contains exported functions or logic checks, mark as "callable components"
+    - Executable binaries (ELF or scripts):
+      * Accept external input (parameters, environment variables, file content, network data)
+      * Registered in system startup scripts (e.g. rcS, init.d, inittab)
+      * Triggered by web forms, CGI, or JavaScript requests
+      * Perform critical operations such as command execution, file manipulation, or network access
+      * Contain dangerous function calls (e.g., system, strcpy, sprintf, popen)
 
-    - Service Components
-      * Network Services
-        - Has socket, bind, listen functionality, or binds to external interfaces (eth0, 0.0.0.0)
-        - Includes listening components like telnetd, pppd, dhcpd, UDPserver
+    - Network service components:
+      * Contain socket, bind, listen functionality
+      * Bind to external interfaces (eth0, br0, 0.0.0.0) or open ports
+      * Examples include: telnetd, pppd, udhcpd, smac2_tftpd, UDPserver, miniigd
+      * Evaluate whether these accept unauthenticated input or expose default services
 
-      * System Services
-        - Background services started by init scripts or auto-run
-        - Appears in rcS, init.d, inittab
+    - Web-related files:
+      * Web server binaries (boa, httpd, mini_httpd, etc.)
+      * Executable CGI scripts or shell scripts, commonly located in /bin, /cgi-bin, /www
+      * HTML or JavaScript files containing forms, user input fields, or dynamic requests
+      * Web configuration files (e.g., boa.conf) that define CGI paths or script execution permissions
 
-      * Web Services
-        - Web servers (boa, lighttpd) and related CGI, backend processing scripts
-        - Executable scripts triggered by web pages (form, JS requests)
+    - Startup and configuration files:
+      * Startup scripts (e.g., /etc/init.d/*, rcS, inittab) that invoke services
+      * Config files specifying interface bindings, open ports, authentication modes, or firmware upgrade routines
+      * Dynamic execution hooks (e.g., auto-update scripts, scheduled tasks)
 
-    - Configuration Files
-      * Web Components
-        - HTML pages, JS files, CGI scripts
-        - Contains user input, action submissions or dynamic loading behavior
+    - Sensitive data files (analyze **only if externally accessible**):
+      * Files containing plaintext credentials, keys, API tokens, or certificates (e.g., passwd, shadow, smbpasswd, *.pem)
+      * Prioritize if accessible through web, services, or user-controlled paths
 
-      * Security Files
-        - Files containing keys, passwords, certificates, tokens
-        - Risk of plaintext storage, lack of permission controls
+    - Exclusion scope (deprioritized or skipped):
+      * Core system utilities (e.g., cp, mv, echo, cat) are not analyzed unless explicitly triggered with user-controlled input
+      * Static, unused libraries or non-executable resource files are considered low priority
 
-      * System Configs
-        - Startup scripts, network configs, service configuration files
-        - May contain startup items, listening ports, authentication methods and other security parameters
 
 directory_requirements:
   user: |
