@@ -2,7 +2,9 @@
 
 A Multi-Agent System for Large-Scale Firmware Collection and Analysis Based on Large Language Models
 
-FirmLLM is designed to **automate long-cycle analysis tasks** by leveraging multi-agent collaboration and LLMs, enabling scalable and intelligent firmware collection and vulnerability analysis.
+FirmLLM is designed to **automate long-cycle analysis tasks** by leveraging multi-agent collaboration and LLMs, enabling scalable and intelligent firmware collection and vulnerability analysis.  
+It aims to **reduce the manual burden on security analysts** by streamlining and accelerating complex firmware security workflows.
+
 
 
 ---
