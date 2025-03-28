@@ -10,7 +10,7 @@ class LogManager:
     _initialized: bool = False
     
     @classmethod
-    def setup(cls, base_log_path: str, console_level: int = logging.INFO, file_level: int = logging.DEBUG):
+    def setup(cls, base_log_path: str, console_level: int = logging.INFO, file_level: int = logging.INFO):
         """Initialize logging configuration"""
         if cls._initialized:
             return
@@ -26,8 +26,8 @@ class LogManager:
         root_logger.handlers.clear()
         
         # Create formatters
-        console_formatter = logging.Formatter('%(levelname)s %(name)s: %(message)s')
-        file_formatter = logging.Formatter('%(levelname)s %(name)s: %(message)s')
+        console_formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+        file_formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
         
         # Console handler
         console_handler = logging.StreamHandler()
@@ -64,7 +64,7 @@ class LogManager:
         if log_file:
             file_handler = logging.FileHandler(log_file)
             file_handler.setFormatter(
-                logging.Formatter('%(levelname)s %(name)s: %(message)s')
+                logging.Formatter('%(name)s - %(levelname)s - %(message)s')
             )
             file_handler.setLevel(logging.DEBUG)
             logger.addHandler(file_handler)
