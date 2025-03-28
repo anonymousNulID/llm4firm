@@ -5,9 +5,9 @@ import glob
 import logging
 import subprocess
 from pathlib import Path
-from firmanalyzer.explore import explorer
+from explore import explorer
 import argparse
-from firmanalyzer.LogManage import LogManager
+from LogManage import LogManager
 import configparser
 
 
