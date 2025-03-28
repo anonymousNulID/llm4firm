@@ -68,7 +68,9 @@ The system consists of two main modules:
 
 ## 🔍 Firmware Analysis System (FirmAnalyzer)
 
-**FirmAnalyzer** provides comprehensive firmware security analysis capabilities.
+FirmAnalyzer aims to **mimic human-like reasoning when analyzing firmware behavior**, leveraging the semantic understanding and code interpretation capabilities of LLMs to autonomously **prioritize, interpret, and investigate potential security issues**.  
+This design helps **alleviate the heavy workload typically required from security professionals** in manual firmware auditing.
+
 
 ### 🛠️ Key Capabilities
 
