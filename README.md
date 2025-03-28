@@ -91,7 +91,7 @@ The system consists of two main modules:
   - **Security analysis strategies**, such as whether to perform code-level audits or pattern-based detections  
   - **Risk severity classification rules** to define what constitutes high/medium/low severity  
   - The **format and structure** of generated **reports and summaries**
-  - 
+  
 ### 🔌 Data Sources
 
 - [FirmSec Dataset](https://github.com/NESA-Lab/FirmSecDataset)
