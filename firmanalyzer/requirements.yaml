@@ -141,7 +141,8 @@ summary_template:
     - Other Issues: [Location]: Root cause of the issue (Specific technical details like vulnerable code/misconfiguration/insecure functions etc.)
 
     [Attack Surface]
-    - Attack Points: [Description of attack points]
+    - Attack Chain Path: Maintain complete attack chain description (Tactical level)
+    - Exploitable Weakness List: Can be exploited through [specific methods] (Technical level)
 
 
 
