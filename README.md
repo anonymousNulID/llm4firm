@@ -101,7 +101,7 @@ This design helps **alleviate the heavy workload typically required from securit
 
 ## 📊 Example Outputs (Examples)
 
-Contains complete logs and reports from analyzing firmware using **DeepSeek-v3** and **DeepSeek-r1** models.
+Contains complete logs and reports from analyzing firmware using **DeepSeek-v3** and **DeepSeek-r1** models. We are actively engaging with vendors to confirm findings and, under compliant conditions, release more security reports
 
 ### 📝 Files
 
@@ -171,6 +171,5 @@ Upcoming work will focus on:
 1. All results are for **research purposes only**  
 2. Please ensure legal and ethical use of the system  
 3. Verification should be performed in sandboxed/test environments  
-4. We are actively engaging with vendors to confirm findings and, under compliant conditions, release more security reports
 
 ---
