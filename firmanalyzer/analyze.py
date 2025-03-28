@@ -212,10 +212,29 @@ Only analyze this file, do not analyze other files, other files will be analyzed
     - Only include CVEs where the vulnerable version range INCLUDES the target version
     - Exclude CVEs that affect versions BEFORE the target version
     - List all CVEs that affect the target version do not omit any
-
+    
 6. Function analysis:
-   - disassembly <file>: Start disassembly mode to check for function calls (limited to one use,for executable and shared library you should use this tool)
-    Example: disassembly busybox
+   - disassembly <file>: Start disassembly mode to check for function calls (limited to one use,for executable and shared library)
+   Use disassembly when the file meets the following criteria:
+   1. The file is an executable or shared library
+   2. The file has high-risk characteristics:
+      - Network service related (e.g. httpd, ftpd, sshd)
+      - System privileged programs (e.g. setuid/setgid binaries)
+      - Security critical components (e.g. authentication, encryption)
+      - Programs that process user input
+   3. Initial analysis reveals:
+      - Potential dangerous function usage
+      - Security sensitive strings
+      - Network related functionality
+      - Privileged operations
+   
+   Do NOT use disassembly for:
+   - Standard system utilities with limited functionality
+   - Non-executable files
+   - Files without security critical features
+   - Files that don't process external input
+   
+   Example: disassembly busybox  # Only if busybox contains network services or privileged operations
 
 **Notes**
 1. Environment: Already in the directory of the file, execute commands directly, no need to change directory
