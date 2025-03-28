@@ -119,9 +119,7 @@ Contains complete logs and reports from analyzing firmware using **DeepSeek-v3**
 ### 🤖 Model Performance Notes
 
 We primarily use **DeepSeek-v3** and **DeepSeek-r1** for firmware analysis.  
-However, our experiments have shown that **Claude-Sonnet-3.7** demonstrates promising performance in code auditing tasks, especially for semantic reasoning and cross-file logic analysis.
-
-DeepSeek offers lower costs, but we are actively experimenting and comparing results across multiple models to find the optimal configuration.
+However, **Claude-Sonnet-3.7** may demonstrates promising performance in code auditing tasks, especially for semantic reasoning and cross-file logic analysis.DeepSeek offers lower costs, but we are actively experimenting and comparing results across multiple models to find the optimal configuration.
 
 ---
 
