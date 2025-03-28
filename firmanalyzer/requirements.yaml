@@ -1,117 +1,108 @@
 file_requirements:
   user: |
-       - Core System Components
-         * Basic Tools
-           - System command sets
-           - Runtime utilities
-           - System management tools
-           
-         * System Libraries
-           - Core libraries
-           - Shared libraries
-           - Dynamic linkers
+    - Core System Components
+      * Basic Tools
+        - Contains basic command tools (e.g. cp, mv, echo)
+        - If supporting parameters or called by scripts, mark as "potential input point"
 
-       - Service Components
-         * Network Services
-           - Remote access
-           - Network utilities
-           - Protocol handlers
-           
-         * System Services
-           - Daemon processes
-           - Background services
-           - Service managers
-           
-         * Web Services
-           - Web servers
-           - Web applications
-           - Web utilities
+      * System Libraries
+        - Core/shared/dynamic link libraries
+        - Contains exported functions or logic checks, mark as "callable components"
 
-       - Configuration Files
-         * Web Components
-           - CGI scripts 
-           - Server configurations 
-           - Web root files 
-           
-         * Security Files
-           - Private keys 
-           - Certificates 
-           - Password stores 
-           
-         * System Configs
-           - Boot scripts
-           - Network configs
-           - Service configs
+    - Service Components
+      * Network Services
+        - Has socket, bind, listen functionality, or binds to external interfaces (eth0, 0.0.0.0)
+        - Includes listening components like telnetd, pppd, dhcpd, UDPserver
+
+      * System Services
+        - Background services started by init scripts or auto-run
+        - Appears in rcS, init.d, inittab
+
+      * Web Services
+        - Web servers (boa, lighttpd) and related CGI, backend processing scripts
+        - Executable scripts triggered by web pages (form, JS requests)
+
+    - Configuration Files
+      * Web Components
+        - HTML pages, JS files, CGI scripts
+        - Contains user input, action submissions or dynamic loading behavior
+
+      * Security Files
+        - Files containing keys, passwords, certificates, tokens
+        - Risk of plaintext storage, lack of permission controls
+
+      * System Configs
+        - Startup scripts, network configs, service configuration files
+        - May contain startup items, listening ports, authentication methods and other security parameters
 
 directory_requirements:
   user: |
-    **Requirements for Key Analysis Areas**:
+    **Key Analysis Targets**
     1. Executable Locations
-       * System Binaries
-       * Library Paths
-       * Special Executables
-
-    2. Sensitive Files Locations
-       * System Configuration
-       * Security Data
-       * Credentials
-   
-    3. Service configuration
-       * Web Services 
-       * Service Data
-       * Service Configuration
-       
-    **Requirements for Analysis Priority**:
-    1. Priority 1 (Critical)
       - bin/
       - sbin/
       - usr/bin/
       - usr/sbin/
       - cgi-bin/
-    2. Priority 2 (High)
+      - Contains triggerable ELF, scripts, CGI
+      - Check for dangerous function calls or system command execution
+
+    2. Sensitive Files
       - etc/
+      - Contains startup process, authentication info, network bindings
+      - Check for external interface bindings, plaintext passwords, config weaknesses
+
       - lib/
+      - Contains custom or third-party .so libraries that may have vulnerable logic
+
+    3. Web Interfaces & Upgrade Logic
       - www/
-    3. Priority 3 (Medium)
       - web/
-      - usr/
-      - upgrade/     
+      - upgrade/
+      - Check for config uploads, firmware upgrades, web backend execution scripts
+
+    **Priority Levels**
+    - Priority 1 (Critical)
+      - Components or scripts that can be directly accessed, triggered or listened from external
+    - Priority 2 (High)
+      - Config files, key files, library files affecting system behavior or authentication
+    - Priority 3 (Medium)
+      - Auxiliary scripts, display pages, logs, upload files etc.
 
 file_findings_requirements:
   user: |
     **Analysis Workflow**
+    0. Attack Surface Discovery
+      - Check for user input paths (web forms, JS, network connections, file parameters)
+      - Check if component is running (started by init script, listening ports, daemon)
+      - Check for input → dangerous function paths (system, strcpy etc.)
+
     1. Information Discovery
-       - Credential Scanning
-       - Network Endpoint Detection
-       - Certificate/Key Analysis 
-       - Version/Outdated Version
-       - Pattern Matching (IP addresses, URLs, passwords, API, token, etc)
+      - Detect passwords, keys, versions, interfaces, tokens and other sensitive info
 
     2. Security Review
-       - Access Control Verification
-       - Encryption Assessment
-       - Service Exposure Check
-       - Default Configuration Audit
+      - Check if services/ports are exposed
+      - Check if configs allow unauthorized access or use weak encryption
+      - Check if startup items load high-risk components
 
     3. Code Analysis
-       - Function Call Review
-       - Injection Testing
-       - Control Flow Analysis
-       - Input Validation Check
+      - Find command execution functions, memory operation functions, input reading functions
+      - Check if unvalidated input is used for dangerous operations
+      - Track data flow to see if user input can affect system calls
 
     4. Vulnerability Search
-       - List all CVEs directly affecting current component versions (ensure completeness)
-       - Exclude matches without direct evidence
+      - Match CVEs (based on library/binary versions)
+      - Only list vulnerabilities with clear paths & loaded components
 
-    **Severity Rating Criteria**
-
-    Level 5 (Critical): Remote Code Execution, Private Key Exposure, Root Credential Exposure, Command Injection, Encryption Bypass
-
-    Level 4 (High):  Password/API Key Exposure, Sensitive Config Exposure, Dangerous Function Usage, Privilege Escalation, Sensitive Data Unencrypted
-
-    Level 3 (Medium): Version Info Exposure, Weak Security Policy, Insecure Configuration, Known Vulnerabilities, Sensitive Information Exposure,etc
-
-    Level 0-2 (Low): Debug Info Exposure, Sensitive Comments, Unnecessary Services, Minor Configuration Errors,etc
+    **Severity Rating**
+    - Level 5 (Critical):
+      - Input source → No validation → Dangerous function → Can execute
+    - Level 4 (High):
+      - Controllable input + Data leakage + Weak configuration
+    - Level 3 (Medium):
+      - Vulnerability exists but path unclear/uncontrollable
+    - Level 0-2 (Low):
+      - No exploit path, only information leakage or configuration warnings
 
 security_report_template:
   user: |
@@ -142,6 +133,3 @@ summary_template:
 
     [Attack Surface]
     - Attack chains or exploitable path: A complete description of the attack chain or specify the exact exploitation method.
-
-
-
