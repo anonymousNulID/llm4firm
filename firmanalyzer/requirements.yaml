@@ -1,10 +1,10 @@
 file_requirements:
   user: |
-    - Focus analysis on files that are reachable from external input, can be triggered through startup or user interaction, and may lead to security-relevant behavior. Prioritize files that meet **any** of the following conditions:
+    - Focus analysis on files that can be externally triggered, accept user input, or impact system behavior. Prioritize files that meet **any** of the following conditions:
 
     - Executable binaries (ELF or scripts):
       * Accept external input (parameters, environment variables, file content, network data)
-      * Registered in system startup scripts (e.g., rcS, init.d, inittab)
+      * Registered in system startup scripts (e.g. rcS, init.d, inittab)
       * Triggered by web forms, CGI, or JavaScript requests
       * Perform critical operations such as command execution, file manipulation, or network access
       * Contain dangerous function calls (e.g., system, strcpy, sprintf, popen)
@@ -17,26 +17,23 @@ file_requirements:
 
     - Web-related files:
       * Web server binaries (boa, httpd, mini_httpd, etc.)
-      * Executable CGI or shell scripts, often in /bin, /cgi-bin, /www
-      * HTML or JavaScript files containing form actions, input fields, or dynamic requests
-      * Web configuration files (e.g., boa.conf) defining CGI paths or backend script permissions
+      * Executable CGI scripts or shell scripts, commonly located in /bin, /cgi-bin, /www
+      * HTML or JavaScript files containing forms, user input fields, or dynamic requests
+      * Web configuration files (e.g., boa.conf) that define CGI paths or script execution permissions
 
     - Startup and configuration files:
-      * Startup scripts (e.g., /etc/init.d/*, rcS, inittab) that invoke services or scripts
-      * Config files specifying interface bindings, open ports, authentication behavior, or firmware update mechanisms
-      * Dynamic hooks such as scheduled tasks or auto-update scripts
+      * Startup scripts (e.g., /etc/init.d/*, rcS, inittab) that invoke services
+      * Config files specifying interface bindings, open ports, authentication modes, or firmware upgrade routines
+      * Dynamic execution hooks (e.g., auto-update scripts, scheduled tasks)
 
     - Sensitive data files (analyze **only if externally accessible**):
-      * Contain credentials, certificates, API tokens, encryption keys (e.g., passwd, shadow, smbpasswd, *.pem)
-      * Prioritize if data is exposed to web interfaces, accessible ports, or misconfigured services
-
-    - Payload carriers (optional targets):
-      * Files not directly exposed, but used as part of command execution or processing chains
-      * Analyze only when referenced in input-driven logic (e.g., cat, cp used within input-handling scripts)
+      * Files containing plaintext credentials, keys, API tokens, or certificates (e.g., passwd, shadow, smbpasswd, *.pem)
+      * Prioritize if accessible through web, services, or user-controlled paths
 
     - Exclusion scope (deprioritized or skipped):
-      * Standalone system utilities (e.g., cp, mv, echo, cat) unless directly used in input-controlled operations
-      * Static libraries or unused resources with no reachable execution path
+      * Core system utilities (e.g., cp, mv, echo, cat) are not analyzed unless explicitly triggered with user-controlled input
+      * Static, unused libraries or non-executable resource files are considered low priority
+
 
 directory_requirements:
   user: |
@@ -47,107 +44,92 @@ directory_requirements:
       - usr/bin/
       - usr/sbin/
       - cgi-bin/
-      - Focus on ELF binaries and scripts that:
-        * Are referenced in startup scripts
-        * Are invoked via CGI or web interfaces
-        * Contain known dangerous functions or execution calls
+      - Contains triggerable ELF, scripts, CGI
+      - Check for dangerous function calls or system command execution
 
     2. Sensitive Files
       - etc/
-        * Startup flow control (init.d, rcS, inittab)
-        * Authentication data (passwd, shadow)
-        * Network interface & port binding configs
+      - Contains startup process, authentication info, network bindings
+      - Check for external interface bindings, plaintext passwords, config weaknesses
+
       - lib/
-        * Custom or third-party libraries (.so) used by services
-        * Linked libraries in user-facing binaries
+      - Contains custom or third-party .so libraries that may have vulnerable logic
 
     3. Web Interfaces & Upgrade Logic
       - www/
       - web/
       - upgrade/
-      - Look for:
-        * Firmware upgrade paths
-        * Web-to-backend script triggers
-        * Frontend-to-CGI execution chains
+      - Check for config uploads, firmware upgrades, web backend execution scripts
 
     **Priority Levels**
     - Priority 1 (Critical)
-      - Components, scripts, or binaries directly accessible, triggerable, or network-bound
+      - Components or scripts that can be directly accessed, triggered or listened from external
     - Priority 2 (High)
-      - Configs, credentials, or libraries influencing exposed behavior or startup
+      - Config files, key files, library files affecting system behavior or authentication
     - Priority 3 (Medium)
-      - Web UI, display pages, logs, or upload-related resources
+      - Auxiliary scripts, display pages, logs, upload files etc.
 
 file_findings_requirements:
   user: |
     **Analysis Workflow**
     0. Attack Surface Discovery
-      - Identify user-controlled inputs (web forms, JS, socket recv, file read, environment variables)
-      - Verify component runtime state (via startup scripts, daemon presence, open ports)
-      - Trace input → sink path (e.g., system(), strcpy(), popen())
+      - Check for user input paths (web forms, JS, network connections, file parameters)
+      - Check if component is running (started by init script, listening ports, daemon)
+      - Check for input → dangerous function paths (system, strcpy etc.)
 
     1. Information Discovery
-      - Detect credentials, hardcoded secrets, API tokens, encryption keys, version info
-      - Extract IPs, URLs, interface names, debug/test paths
+      - Detect passwords, keys, versions, interfaces, tokens and other sensitive info
 
     2. Security Review
-      - Check service exposure (bound interfaces, open ports)
-      - Verify authentication, input control, and encryption usage
-      - Analyze configuration for weak/default options
+      - Check if services/ports are exposed
+      - Check if configs allow unauthorized access or use weak encryption
+      - Check if startup items load high-risk components
 
     3. Code Analysis
-      - Identify dangerous calls (system, strcpy, sprintf, popen, open, eval)
-      - Check use of unvalidated or user-controlled input in these functions
-      - Perform control flow and taint tracking to assess input reachability
+      - Find command execution functions, memory operation functions, input reading functions
+      - Check if unvalidated input is used for dangerous operations
+      - Track data flow to see if user input can affect system calls
 
     4. Vulnerability Search
-      - Match known CVEs using version identifiers and component metadata
-      - Include only those with confirmed execution paths and runtime presence
-
-    - Data Flow Reachability
-      - Confirm whether user input reaches dangerous operations without sanitization
-      - Trace across multiple layers (e.g., web input → script → binary → command)
+      - Match CVEs (based on library/binary versions)
+      - Only list vulnerabilities with clear paths & loaded components
 
     **Severity Rating**
     - Level 5 (Critical):
-      - Reachable input → No validation → Dangerous function → Executable path
+      - Input source → No validation → Dangerous function → Can execute
     - Level 4 (High):
-      - Controllable input + Sensitive exposure or weak protection
+      - Controllable input + Data leakage + Weak configuration
     - Level 3 (Medium):
-      - Known flaw exists but lacks reachable or controllable path
-    - Level 0–2 (Low):
-      - Informational findings, debug data, or misconfigurations with no clear exploit vector
+      - Vulnerability exists but path unclear/uncontrollable
+    - Level 0-2 (Low):
+      - No exploit path, only information leakage or configuration warnings
 
 security_report_template:
   user: |
-    - [Location] Relative file path or directory
-    - [Type] Component / Credential / Configuration / Script / Other
-    - [Version Info] Software/library version, CVE references if applicable
-    - [Description] Clear explanation of the identified issue or behavior
-    - [Details] Technical specifics (e.g., input vector, vulnerable function, script name)
-    - [Impact] Expected security consequences (e.g., RCE, DoS, credential leakage)
-    - [Exploitability] Confirmed / Theoretical / None
-    - [Risk Level] Critical / High / Medium / Low
+    - [Location] Relative path
+    - [Type] Component/Credential/Configuration/Other
+    - [Version Info] Version/release information and CVE number if applicable
+    - [Description] Detailed issue description
+    - [Details] Technical details/Sensitive information
+    - [Impact] Potential security impact
+    - [Risk Level] Critical/High/Medium/Low
 
 summary_template:
   user: |
     Firmware Summary:
-
     [Basic Info]
-    - Name / Version: [Firmware name and version]
-    - Device / Architecture: [Model, SoC or CPU arch]
-    - Key Metadata: [Build date, kernel version, release notes, etc.]
+    - Name/Version: [Firmware name and version]
+    - Device/Type/Arch: [Device model and architecture]
+    - Key Info: [Other important information, such as release date, kernel version, etc.]
 
-    [Coverage]
-    - Analyzed Directories: [List of scanned root-level folders]
-    - High-Value Files: [Core files assessed for vulnerability]
+    [Coverage] 
+    - Key Dirs: [Key directories analyzed]
+    - Key Files: [Key files analyzed]
 
-    [Findings]
-    - Critical Issues: [Location] – [Root cause and impact]
-    - Major Issues: [Location] – [Root cause and impact]
-    - Other Issues: [Location] – [Root cause and impact]
+    [Main Issues]
+    - Critical Issues: [Location]: Root cause of the issue (Specific technical details like vulnerable code/misconfiguration/insecure functions etc.)
+    - Major Issues: [Location]: Root cause of the issue (Specific technical details like vulnerable code/misconfiguration/insecure functions etc.)
+    - Other Issues: [Location]: Root cause of the issue (Specific technical details like vulnerable code/misconfiguration/insecure functions etc.)
 
     [Attack Surface]
-    - Confirmed Triggerable Paths: [List of scripts/binaries triggered from web or startup]
-    - Bound Ports or Services: [List of exposed services and interfaces]
-    - Exploitable Chains: [Input → Component → Sink → Impact flow description]
+    - Attack chains or exploitable path: A complete description of the attack chain or specify the exact exploitation method.
