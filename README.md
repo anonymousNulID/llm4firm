@@ -136,10 +136,8 @@ DeepSeek offers lower costs, but we are actively experimenting and comparing res
 ### 🔬 Experimental Verification Bottlenecks
 
 - **Lack of standardized firmware security benchmarks**  
-  Unlike traditional tools such as **FirmWalker**, **EMBA**, or **Firmadyne**, which rely on predefined rules or pattern-based scanning, FirmLLM performs semantic-level analysis and configuration-aware reasoning using LLMs.  
-  This fundamental difference makes it difficult to perform **direct, objective comparisons**:  
+  Unlike traditional tools such as **FirmWalker**, **EMBA**, or **Firmadyne**, which rely on predefined rules or pattern-based scanning, FirmLLM performs semantic-level analysis and configuration-aware reasoning using LLMs. This fundamental difference makes it difficult to perform **direct, objective comparisons**:  
   - Traditional tools do not provide results with semantic insights or high-level reasoning context  
-  - Key elements such as init scripts, configuration semantics, or cross-file logic are not analyzed by baseline tools  
   - Manual alignment is often required to interpret whether the findings are equivalent, resulting in **labor-intensive, subjective validation**
 
 - **Inconsistent vulnerability reporting ground truth**  
