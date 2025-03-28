@@ -7,7 +7,7 @@ import subprocess
 from pathlib import Path
 from firmanalyzer.explore import explorer
 import argparse
-from LogManage import LogManager
+from firmanalyzer.LogManage import LogManager
 import configparser
 
 
