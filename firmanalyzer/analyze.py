@@ -24,7 +24,7 @@ from callback import TokenUsageCallbackHandler
 from tools import BinaryAnalyzer
 from utils import check_real_permissions, parse_analysis_response
 from R2decetor import R2VersionDetector
-from firmanalyzer.LogManage import LogManager
+from LogManage import LogManager
 
 analysis_logger = LogManager.get_logger('Analyzer')
 llm_client = LLMClient()  # Use 'config.ini' by default
