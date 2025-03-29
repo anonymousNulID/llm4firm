@@ -74,8 +74,8 @@ file_findings_requirements:
     **Analysis Workflow**
     0. Attack Surface Discovery
       - Check for user input paths (web forms, JS, network connections, file parameters)
-      - Check if component is running (started by init script, listening ports, daemon)
       - Check for input → dangerous function paths (system, strcpy etc.)
+      - Check if there are references to other paths in the firmware, or if this file configures, invokes, or depends on other components
 
     1. Information Discovery
       - Detect passwords, keys, versions, interfaces, tokens and other sensitive info
@@ -84,6 +84,7 @@ file_findings_requirements:
       - Check if services/ports are exposed
       - Check if configs allow unauthorized access or use weak encryption
       - Check if startup items load high-risk components
+      - Check if this configuration directly or indirectly affects the behavior or execution of other components
 
     3. Code Analysis
       - Find command execution functions, memory operation functions, input reading functions
