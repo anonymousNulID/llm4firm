@@ -501,7 +501,7 @@ def analyze(state: AgentState) -> str:
                                     continue
                         
                         if high_severity_findings:
-                            combined_findings = " | ".join(high_severity_findings)
+                            combined_findings = "\n".join(high_severity_findings)
                             analysis_results.append({
                                 "file": get_relative_path(file_path, state["base_path"]),
                                 "findings": combined_findings + "\n"
