@@ -131,8 +131,6 @@ file_findings_requirements:
           - Unused Open Ports or Services
           - Minor Config Errors (e.g. DNS Leak, Timezone)
 
-
-
 security_report_template:
   user: |
     - [Location] Relative path
