@@ -94,15 +94,43 @@ file_findings_requirements:
       - Match CVEs (based on library/binary versions)
       - Only list vulnerabilities with clear paths & loaded components
 
-    **Severity Rating**
-    - Level 5 (Critical):
-      - Reachable input → No validation → Dangerous function → Executable path
-    - Level 4 (High):
-      - Controllable input + Sensitive exposure or weak protection
-    - Level 3 (Medium):
-      - Known flaw exists but lacks reachable or controllable path
-    - Level 0–2 (Low):
-      - Informational findings, debug data, or misconfigurations with no clear exploit vector
+    severity_rating:
+      level_5_critical:
+        description: Input → No validation → Dangerous function → Executable
+        examples:
+          - Remote Code Execution (RCE)
+          - Command Injection
+          - Private Key or Root Credential Exposure
+          - Encryption Bypass
+          - Arbitrary File Read/Write
+          - Dynamic Library Hijacking
+
+      level_4_high:
+        description: Controllable input + Data leakage + Weak configuration
+        examples:
+          - Password/API Key Exposure
+          - Privilege Escalation
+          - Dangerous Function Controlled by Input
+          - Weak or Disabled Encryption
+          - Sensitive Data in Plaintext Transmission
+          - Web Vulns: SSRF, CSRF, IDOR
+
+      level_3_medium:
+        description: Vulnerability exists but exploit path unclear or uncontrollable
+        examples:
+          - Known Vulnerable Component Loaded
+          - Default Credentials or Weak Permissions
+          - Exposed Configs with Limited Risk
+          - Hardcoded Interface Info
+          - Flawed Auth Logic (with conditions)
+
+      level_0_2_low:
+        description: No exploit path, info leakage or minor misconfig
+        examples:
+          - Debug Info, Test Interfaces, Sensitive Comments
+          - Unused Open Ports or Services
+          - Minor Config Errors (e.g. DNS Leak, Timezone)
+
 
 
 security_report_template:
