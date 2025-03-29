@@ -756,7 +756,9 @@ Binaries extracted from firmware images may have structural issues:
 | Missing call to `__libc_start_main()` | Packed binary or stripped loader |
 | Invalid disassembly or decompile failures | Misaligned offset / corrupted header |
 
-
+### In such cases:
+- Set `"risk_level": "Unknown"` if analysis is blocked
+- Add `"confidence": "High | Medium | Low"
 ---
 
 """
