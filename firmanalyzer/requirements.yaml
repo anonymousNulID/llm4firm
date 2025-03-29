@@ -105,7 +105,8 @@ file_findings_requirements:
           - Encryption Bypass
           - Arbitrary File Read/Write
           - Dynamic Library Hijacking
-
+          - Configuration or script directly launches vulnerable or unauthorized executable
+    
       level_4_high:
         description: Controllable input + Data leakage + Weak configuration
         examples:
@@ -115,22 +116,28 @@ file_findings_requirements:
           - Weak or Disabled Encryption
           - Sensitive Data in Plaintext Transmission
           - Web Vulns: SSRF, CSRF, IDOR
-
-      level_3_medium:
-        description: Vulnerability exists but exploit path unclear or uncontrollable
-        examples:
-          - Known Vulnerable Component Loaded
-          - Default Credentials or Weak Permissions
-          - Exposed Configs with Limited Risk
-          - Hardcoded Interface Info
-          - Flawed Auth Logic (with conditions)
-
-      level_0_2_low:
-        description: No exploit path, info leakage or minor misconfig
-        examples:
-          - Debug Info, Test Interfaces, Sensitive Comments
-          - Unused Open Ports or Services
-          - Minor Config Errors (e.g. DNS Leak, Timezone)
+          - File references or configures execution of another risky or misconfigured component
+          - Indirect execution chain identified from user input to a dangerous binary
+  
+    level_3_medium:
+      description: Vulnerability exists but exploit path unclear or uncontrollable
+      examples:
+        - Known Vulnerable Component Loaded
+        - Default Credentials or Weak Permissions
+        - Exposed Configs with Limited Risk
+        - Hardcoded Interface Info
+        - Flawed Auth Logic (with conditions)
+        - Config or script references other components but path not fully controllable or executable
+        - Component linking observed but no clear attack surface
+  
+    level_0_2_low:
+      description: No exploit path, info leakage or minor misconfig
+      examples:
+        - Debug Info, Test Interfaces, Sensitive Comments
+        - Unused Open Ports or Services
+        - Minor Config Errors (e.g. DNS Leak, Timezone)
+        - References to other components exist but not executed or not exposed
+        - Inactive or broken component configuration linkage
 
 
 security_report_template:
