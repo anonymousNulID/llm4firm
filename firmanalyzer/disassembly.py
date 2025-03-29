@@ -571,7 +571,7 @@ class R2Analyzer(cmd.Cmd):
         "reason": {
         "description": "Brief risk description",
         "evidence": "Call chain analysis; Key instructions; Variable tracking; Input sources; Taint trace",
-        "possible_extraction_error": true|false (optional, default false)
+        "confidence": "High | Medium | Low"
         },
         "next_step": "Next analysis step or target address"
     },
@@ -756,9 +756,6 @@ Binaries extracted from firmware images may have structural issues:
 | Missing call to `__libc_start_main()` | Packed binary or stripped loader |
 | Invalid disassembly or decompile failures | Misaligned offset / corrupted header |
 
-### In such cases:
-- Set `"risk_level": "Unknown"` if analysis is blocked
-- Add `"possible_extraction_error": true` in your `"reason"` section
 
 ---
 
