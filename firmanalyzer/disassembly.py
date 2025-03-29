@@ -372,14 +372,14 @@ class R2Analyzer(cmd.Cmd):
                     score += 1.5 * position_weight 
                 
                 patterns = {
-                    'main': 15.0,
-                    'init': 12.0,
-                    'handle': 10.0,
-                    'process': 8.0,
-                    'callback': 8.0,
+                    'main': 30.0,
+                    'init': 20.0,
+                    'handle': 15.0,
+                    'process': 12.0,
                     'recv': 12.0,
                     'read': 10.0,
-                    'parse': 8.0
+                    'parse': 8.0,
+                    'callback': 8.0,
                 }
                 
                 for pattern, weight in patterns.items():
