@@ -373,39 +373,14 @@ class R2Analyzer(cmd.Cmd):
                 
                 patterns = {
                     'cgi': 35.0,
-                    'http': 35.0,
-                    'web': 30.0,
-                    'auth': 35.0,
-                    
-                    'command': 32.0,
-                    'cmd': 32.0,
-                    'exec': 35.0,
-                    
-                    'socket': 30.0,
-                    'connect': 28.0,
-                    'recv': 30.0,
-                    'send': 28.0,
-                    
-                    'parse': 25.0,
-                    'json': 25.0,
-                    'xml': 25.0,
-                    'config': 28.0,
-                    
                     'main': 30.0,
                     'init': 25.0,
-                    
                     'handler': 22.0,
                     'process': 20.0,
                     'handle': 22.0,
                     'callback': 18.0,
-                    
-                    'input': 30.0,
-                    'get': 25.0,
-                    'post': 25.0,
                     'request': 25.0,
                     'response': 20.0,
-                    
-                    'file': 18.0,
                 }
                 
                 for pattern, weight in patterns.items():
