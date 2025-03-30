@@ -1,0 +1,700 @@
+'''
+- [Location] bin/busybox
+- [Type] Component
+- [Version Info] BusyBox v1.01 (2017.09.12-05:07+0000)
+- [Description] Older version of BusyBox potentially containing vulnerabilities
+- [Details] Version string appears in multiple contexts including shell, klogd, and as a multi-call binary
+- [Impact] Potential exploitation of known vulnerabilities in this version
+- [Risk Level] High
+
+- [Location] bin/busybox
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Hardcoded IP addresses found in binary
+- [Details] Contains hardcoded IP addresses '192.168.1.100' and '192.168.1.199'
+- [Impact] Could be used for network mapping or targeted attacks
+- [Risk Level] Medium
+
+- [Location] bin/busybox
+- [Type] Component
+- [Version Info] Unknown
+- [Description] Dynamic linking to potentially vulnerable libraries
+- [Details] Links to libcrypt.so.0 and libc.so.0 (uClibc variant) which may contain vulnerabilities
+- [Impact] Potential exploitation of library vulnerabilities
+- [Risk Level] Medium
+
+- [Location] bin/busybox
+- [Type] Component
+- [Version Info] Unknown
+- [Description] Network-related functionality with potential security risks
+- [Details] Contains socket operations, TFTP client functionality, raw socket operations, and messages about root login bypass
+- [Impact] Potential security risks if improperly implemented
+- [Risk Level] High
+
+- [Location] bin/busybox
+- [Type] Component
+- [Version Info] Unknown
+- [Description] Multiple critical vulnerabilities identified
+- [Details] Includes: 1) RCE via stack control in sym.run_applet_by_name, 2) Lack of input validation in network functions, 3) Tainted data flow to vulnerable memcpy operations, 4) Format string vulnerabilities in logging functions, 5) Unsafe strcpy/memmove operations
+- [Impact] Potential remote code execution and memory corruption vulnerabilities
+- [Risk Level] Critical
+'''
+'''
+- [Location] etc/shadow
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Password hash exposure for root user
+- [Details] MD5 password hash found: $1$GTN.gpri$DlSyKvZKMR9A9Uj9e9wR3/
+- [Impact] Potential offline password cracking if accessed by unauthorized parties
+- [Risk Level] High
+
+- [Location] etc/dhcp6cctlkey
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Potential key exposure for DHCPv6 client control
+- [Details] Base64-encoded key found: N7rPsSJ1M+AcEfPXiumvGQ==
+- [Impact] Compromise of DHCPv6 client control mechanism if key is exposed
+- [Risk Level] Medium
+
+- [Location] etc/dhcp6sctlkey
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Potential sensitive key exposure for DHCPv6 service control
+- [Details] Base64-encoded key found: bmrhq9pLttzAyiy/EwB6Xg==
+- [Impact] Compromise of DHCPv6 service control mechanism if key is exposed
+- [Risk Level] Medium
+'''
+'''
+- [Location] sbin/hostapd
+- [Type] Component
+- [Version Info] v0.5.9, 2.0; CVEs: CVE-2016-4476, CVE-2015-4142, CVE-2015-4141, CVE-2014-3686, CVE-2012-4445, CVE-2012-2389, CVE-2006-2213
+- [Description] Version exposure and embedded sensitive content including URLs, IPs, and email
+- [Details] Contains version strings (v0.5.9, 2.0), URLs (http://manufacturer.url.here, http://model.url.here), IPs (224.0.1.178, 239.255.255.250), email (j@w1.fi)
+- [Impact] Potential vulnerability mapping and information disclosure
+- [Risk Level] High
+
+- [Location] sbin/wpa_supplicant
+- [Type] Component
+- [Version Info] v0.5.9; CVEs: CVE-2016-4477, CVE-2016-4476
+- [Description] Version exposure and embedded sensitive email
+- [Details] Contains version string 'wpa_supplicant v0.5.9' and email 'j@w1.fi'
+- [Impact] Potential vulnerability mapping and information disclosure
+- [Risk Level] High
+
+- [Location] sbin/iwconfig
+- [Type] Component
+- [Version Info] Unknown exact version
+- [Description] Version-related strings found and dynamic linking to potentially vulnerable libraries
+- [Details] Version-related strings ('--version', 'iw_print_version_info', 'iw_get_kernel_we_version'), links to libiw.so.29, libgcc_s.so.1, libc.so.0
+- [Impact] Potential vulnerability mapping
+- [Risk Level] Medium
+
+- [Location] sbin/iwlist
+- [Type] Component
+- [Version Info] Unknown
+- [Description] Multiple critical vulnerabilities including format string injection and memory corruption
+- [Details] Format string vulnerability through uncontrolled argv[1] usage, memory corruption via attacker-controlled register writes
+- [Impact] Remote code execution potential
+- [Risk Level] Critical
+
+- [Location] sbin/iwpriv
+- [Type] Component
+- [Version Info] Unknown exact version
+- [Description] Version information strings found
+- [Details] Contains version-related strings including 'iw_print_version_info' and '--version'
+- [Impact] Potential vulnerability mapping
+- [Risk Level] Medium
+
+- [Location] sbin/tc
+- [Type] Component
+- [Version Info] Unknown exact version
+- [Description] Version string and potential sensitive string patterns found
+- [Details] Version string 'TC HTB version %d.%d', strings related to authentication tokens and hash keys
+- [Impact] Potential vulnerability mapping and sensitive functionality exposure
+- [Risk Level] Medium
+
+- [Location] sbin/wifitool
+- [Type] Component
+- [Version Info] Linked against uClibc and GLIBC_2.0; CVEs: CVE-2021-43523, CVE-2021-27419, CVE-2017-9729
+- [Description] Dangerous function usage and outdated library linking
+- [Details] Uses 'strcpy', links against uClibc and GLIBC_2.0
+- [Impact] Potential buffer overflow and library vulnerabilities
+- [Risk Level] High
+
+- [Location] sbin/wlanconfig
+- [Type] Component
+- [Version Info] Unknown
+- [Description] Multiple critical vulnerabilities including buffer overflow and format string vulnerabilities
+- [Details] Direct argv-to-memcpy path with no bounds checking, multiple format string vulnerabilities
+- [Impact] Remote code execution potential
+- [Risk Level] Critical
+
+- [Location] sbin/iptables-multi
+- [Type] Component
+- [Version Info] Potential versions: 2.6.31 (build), 1.4.5 (iptables), 1.0 (rules); CVEs: CVE-2012-2663, CVE-2004-0986
+- [Description] Version strings and potential vulnerabilities found
+- [Details] Contains version strings '1.4.5', '2.6.31', '1.0'
+- [Impact] Potential vulnerability mapping
+- [Risk Level] High
+'''
+'''
+- [Location] sbin/hostapd
+- [Type] Component
+- [Version Info] hostapd v0.5.9 (modified version 'sony_r5.7'), CVEs: CVE-2016-4476, CVE-2015-4142, CVE-2015-4141, CVE-2014-3686, CVE-2012-4445, CVE-2012-2389, CVE-2006-2213
+- [Description] Outdated hostapd version with multiple critical vulnerabilities including command injection, denial of service, and information disclosure
+- [Details] Confirmed version 'hostapd v0.5.9' with vendor modifications ('sony_r5.7'). Contains sensitive URLs (http://manufacturer.url.here, http://model.url.here), IPs (224.0.1.178, 239.255.255.250), and email (j@w1.fi). Contains format string vulnerabilities (sym.hostapd_ctrl_iface_deinit, fcn.00409380, main, fcn.0040573c), unauthenticated RCE (sym.ap_handle_timer), and insecure printf usage (sym.eap_wps_config_deinit_data)
+- [Impact] Potential remote code execution, denial of service, information disclosure, and command injection
+- [Risk Level] Critical
+'''
+'''
+- [Location] web/userRpm/CmxDdnsRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Form submission lacks CSRF protection
+- [Details] The doSubmit() function performs domain validation but lacks CSRF tokens or referer checks
+- [Impact] Potential CSRF attacks leading to unauthorized configuration changes
+- [Risk Level] Medium
+
+- [Location] web/userRpm/PingWatchDogRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Reflected XSS vulnerability
+- [Details] Uses document.write() with unescaped user-controlled input (dst_addr_input) and lacks HTML/script tag sanitization
+- [Impact] Potential execution of arbitrary JavaScript code
+- [Risk Level] High
+
+- [Location] web/userRpm/AccessCtrlHostsListsAdvRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential client-side input validation issues
+- [Details] JavaScript handles sensitive form data (IP/MAC addresses) with weak validation
+- [Impact] Potential bypass of access controls
+- [Risk Level] Medium
+
+- [Location] web/userRpm/GuestNetFolderAdvRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential XSS vulnerability
+- [Details] 'foldersInfo' array elements used in document.write() without proper sanitization
+- [Impact] Potential execution of arbitrary JavaScript code
+- [Risk Level] High
+
+- [Location] web/userRpm/GuestNetUserModifyRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Insecure form handling
+- [Details] Uses GET method for submitting sensitive credentials (username/password)
+- [Impact] Credential exposure in URLs and server logs
+- [Risk Level] High
+
+- [Location] web/userRpm/GuestNetWirelessCfgRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Insecure form submission
+- [Details] Uses GET method exposing PSK passwords (pskSecret/pskSecret5g) in URLs
+- [Impact] Credential exposure in browser history, logs, and referrer headers
+- [Risk Level] High
+
+- [Location] web/userRpm/LanIPv6CfgRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Client-side validation bypass risk
+- [Details] Form uses GET method exposing IPv6 configuration parameters in URLs
+- [Impact] Potential logging/history exposure of sensitive network configuration
+- [Risk Level] Medium
+
+- [Location] web/userRpm/NetworkCfgRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential CSRF vulnerability
+- [Details] Form submission lacks anti-CSRF tokens
+- [Impact] Unauthorized network configuration changes
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WanDynamicIpCfgRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Insufficient IP range validation
+- [Details] 'checkIP()' function doesn't validate proper IP range ordering (end > start)
+- [Impact] Potential logical errors in IP range configuration
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WanStaticIpCfgRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Lack of CSRF protection
+- [Details] Form handling relies on client-side JavaScript without CSRF protections
+- [Impact] Potential unauthorized configuration changes
+- [Risk Level] Medium
+
+- [Location] web/userRpm/AccessCtrlAccessTargetsAdvRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Reflected XSS vulnerability
+- [Details] Form submission uses GET method with unsanitized user inputs (targets_lists_name)
+- [Impact] Potential execution of arbitrary JavaScript code
+- [Risk Level] High
+
+- [Location] web/userRpm/AutoEmailRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Insecure credential handling
+- [Details] Form uses GET method exposing SMTP credentials in URLs
+- [Impact] Credential exposure in browser history and logs
+- [Risk Level] High
+
+- [Location] web/userRpm/BakNRestoreRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential file upload security issue
+- [Details] Form allows uploading configuration files without visible server-side validation
+- [Impact] Potential malicious file upload
+- [Risk Level] Medium
+
+- [Location] web/userRpm/BPACfgRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Authentication credentials exposed
+- [Details] Sensitive authentication data loaded from bpaData array in plaintext
+- [Impact] Credential exposure and potential manipulation
+- [Risk Level] High
+
+- [Location] web/userRpm/LanDhcpServerRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential input validation issues
+- [Details] Relies on external validation functions without visible sanitization
+- [Impact] Potential bypass of DHCP configuration controls
+- [Risk Level] Medium
+
+- [Location] web/userRpm/LocalManageControlRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Client-side MAC address validation
+- [Details] MAC address whitelisting with client-side only validation
+- [Impact] Potential MAC address spoofing
+- [Risk Level] Medium
+
+- [Location] web/userRpm/PPPoECfgRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Password handling in client-side JavaScript
+- [Details] Form uses GET method exposing PPPoE credentials in URLs
+- [Impact] Credential exposure in browser history and logs
+- [Risk Level] High
+
+- [Location] web/userRpm/PPTPCfgRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Multiple XSS vulnerabilities
+- [Details] Values from pptpInf array directly assigned to innerHTML without sanitization
+- [Impact] Potential execution of arbitrary JavaScript code
+- [Risk Level] High
+
+- [Location] web/userRpm/QoSRuleCfgRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Insufficient client-side validation
+- [Details] Form uses GET method exposing parameters in URL
+- [Impact] Potential bypass of QoS rules
+- [Risk Level] Medium
+
+- [Location] web/userRpm/SoftwareUpgradeRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential firmware upload security issue
+- [Details] Form accepts .bin files without content validation
+- [Impact] Potential unauthorized firmware upload
+- [Risk Level] High
+
+- [Location] web/userRpm/WlanSecurityRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Weak password validation
+- [Details] checkpwd() function has commented-out length checks and allows wide range of special characters
+- [Impact] Potential weak password acceptance
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WpsCfgRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] WPS PIN exposure
+- [Details] WPS PIN (g_wpsPIN) displayed in plaintext
+- [Impact] Potential unauthorized WPS access
+- [Risk Level] High
+
+- [Location] web/userRpm/WzdWlanApRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Insecure key generation
+- [Details] randomsec() function uses Math.random() for WEP key generation
+- [Impact] Predictable key generation
+- [Risk Level] High
+'''
+'''
+- [Location] web/userRpm/LoginRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Login form uses GET method which exposes credentials in URLs and stores Base64-encoded credentials in cookies without Secure or HttpOnly flags
+- [Details] The login form uses GET method (method="get") which will expose username and password in the URL and server logs. The password is MD5 hashed before transmission but this is still a security risk. The code stores Base64-encoded credentials in cookies (Authorization cookie) without Secure or HttpOnly flags.
+- [Impact] Credential exposure and potential theft via XSS or MITM attacks
+- [Risk Level] High
+
+- [Location] web/userRpm/LoginRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential XSS vulnerability through innerHTML usage and open redirect vulnerability through httpAutErrorArray
+- [Details] The file uses innerHTML to dynamically insert user-controlled content (error messages) without proper sanitization. The code contains a window.parent.location.href assignment that could potentially be used for open redirect attacks if the httpAutErrorArray[2] value can be controlled by an attacker.
+- [Impact] Potential XSS and open redirect attacks
+- [Risk Level] Medium
+
+- [Location] web/userRpm/ChangeLoginPwdRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Password change form uses GET method which exposes credentials in URLs
+- [Details] The password handling uses Base64 encoding of MD5 hashes, which is considered weak for security purposes. The form uses GET method for password change, which exposes credentials in the URL.
+- [Impact] Credential exposure and potential theft
+- [Risk Level] High
+
+- [Location] web/userRpm/AccessCtrlAccessRuleModifyRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Multiple form inputs without proper input validation and form submission uses GET method without CSRF protection
+- [Details] The HTML form contains numerous input fields that are processed by JavaScript functions without visible input validation. The form uses GET method for submission which exposes all form parameters in the URL. No CSRF tokens or other anti-CSRF mechanisms are present in the form.
+- [Impact] Potential XSS, injection attacks, and CSRF vulnerabilities
+- [Risk Level] High
+
+- [Location] web/userRpm/AccessCtrlTimeSchedAdvRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Form submission with GET method and potential CSRF vulnerability
+- [Details] The form uses GET method (method="get") which exposes parameters in URL and may be vulnerable to CSRF as there's no visible anti-CSRF token. The absence of any CSRF tokens or secret parameters in the form submission increases the risk of CSRF attacks.
+- [Impact] Potential CSRF attacks
+- [Risk Level] Medium
+
+- [Location] web/userRpm/AccessCtrlTimeSchedRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Confirmed XSS vulnerability in URL parameter handling
+- [Details] The functions doAll(), doAdd(), and doPage() directly concatenate user-controlled parameters (val, nPage) into location.href without any sanitization. This allows for arbitrary JavaScript injection via crafted URLs.
+- [Impact] XSS attacks
+- [Risk Level] High
+
+- [Location] web/userRpm/DateTimeCfgRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential XSS vulnerability due to lack of input sanitization in form fields
+- [Details] The HTML form contains multiple input fields that are used in JavaScript without proper sanitization. The form uses GET method which exposes parameters in the URL, increasing XSS risk. The JavaScript validation functions only check for numeric ranges but don't sanitize input.
+- [Impact] Potential XSS attacks
+- [Risk Level] Medium
+
+- [Location] web/userRpm/DiagnosticRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential Cross-Site Request Forgery (CSRF) vulnerability
+- [Details] The HTML file contains a diagnostic tool that sends requests to '../userRpm/PingIframeRpm.htm' with user-controlled parameters without apparent CSRF protection mechanisms like tokens or same-origin checks.
+- [Impact] Potential CSRF attacks
+- [Risk Level] Medium
+
+- [Location] web/userRpm/ParentCtrlRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential Cross-Site Scripting (XSS) vulnerability due to unvalidated input in URL parameters
+- [Details] The JavaScript functions construct URLs using user-controlled input without proper validation or encoding, which could lead to XSS if these parameters are reflected back in the page. No encoding/sanitization/validation functions found in the file.
+- [Impact] XSS attacks
+- [Risk Level] High
+
+- [Location] web/userRpm/VirtualServerRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential DOM-based XSS vulnerability
+- [Details] The JavaScript code uses location.href with user-controllable parameters without proper sanitization. The variables virServerListPara, protocolList, and modifyId are used in multiple document.write() operations without proper HTML escaping.
+- [Impact] XSS attacks
+- [Risk Level] High
+
+- [Location] web/userRpm/WlanMacFilterRpmAdv.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential security issues found in the JavaScript validation functions and form handling
+- [Details] The file contains JavaScript functions for validating MAC addresses and WEP keys, but the validation for MAC addresses has a flawed logic that could potentially allow invalid MAC addresses to pass validation. There's also a hidden form field 'vapIdx' that could be manipulated.
+- [Impact] Potential bypass of MAC address filtering
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WzdAccessCtrlRuleAddRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential DOM-based XSS vulnerability in URL parameter handling
+- [Details] The JavaScript function 'doSubmit()' constructs a URL by directly concatenating user-controlled form inputs without proper encoding. This could allow for DOM-based XSS if malicious input is reflected in the page.
+- [Impact] XSS attacks
+- [Risk Level] High
+
+- [Location] web/userRpm/WzdWanTypeRpm.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential security issue in form handling and device reboot confirmation
+- [Details] The JavaScript function 'doVlanSubmit()' handles form submissions and can trigger device reboots without proper CSRF protection. The function uses confirm() dialogs for reboot confirmation, but lacks validation of the form submission source.
+- [Impact] Potential CSRF attacks leading to unauthorized device reboots
+- [Risk Level] Medium
+'''
+'''
+- [Location] web/userRpm/AccessCtrlHostsListsRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] The HTML file contains JavaScript functions that manipulate URL parameters without proper input validation. The form uses GET method which exposes parameters in the URL.
+- [Details] JavaScript functions (doAll, doAdd, doPage) manipulate URL parameters without validation. Form uses GET method exposing host information (MAC, IP addresses).
+- [Impact] Potential exposure of sensitive host information and manipulation of access control lists.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/IPv6StatusRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential CSRF vulnerability due to form submission via GET method without CSRF protection.
+- [Details] Form uses GET method for submission (method="get") and lacks CSRF tokens or other protections.
+- [Impact] Could allow attackers to craft malicious URLs that perform actions when visited by an authenticated user.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WlanNetworkRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Weak WEP encryption implementation and potential security misconfiguration.
+- [Details] JavaScript functions for WEP key validation (checkwephexkey, checkwepasiikey) with specific length requirements (5,13,16 for ASCII and 10,26,32 for HEX). Presence of WEP (known to be insecure) and explicit handling of WEP-related configurations.
+- [Impact] Potential security weaknesses in wireless configuration interface.
+- [Risk Level] High
+
+- [Location] web/userRpm/WlanNetworkRpm_AP.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Multiple XSS vulnerabilities through dynamic content generation with user-controllable data.
+- [Details] Multiple instances of document.write() being used to dynamically generate HTML content without proper output encoding. User-controllable data (regionInfo array values) is directly written to the document.
+- [Impact] Clear XSS attack vectors if attacker can control any of these values.
+- [Risk Level] High
+
+- [Location] web/userRpm/WzdStaticIpRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Form submission method uses GET with potential security implications.
+- [Details] Form uses GET method which exposes submitted parameters in the URL. Contains hidden input fields (ClientId and PopupWindow) but no visible CSRF tokens.
+- [Impact] Sensitive network configuration parameters exposed in browser history, logs, or referrer headers.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/AccessCtrlAccessRulesRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential XSS and CSRF vulnerabilities.
+- [Details] JavaScript functions manipulate URL parameters without proper input validation. Form uses GET method which exposes parameters in URLs. Multiple unsafe JavaScript event handlers and unprotected form inputs.
+- [Impact] Potential for XSS or CSRF attacks if backend doesn't implement proper validation.
+- [Risk Level] High
+
+- [Location] web/userRpm/AccessCtrlAccessTargetsRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential Cross-Site Scripting (XSS) vulnerability.
+- [Details] JavaScript code uses 'location.href' with unvalidated user input parameters. Inconsistent use of output encoding (escapeHtml function used for some but not all dynamic content).
+- [Impact] Potential XSS or open redirect vulnerabilities if array values can be controlled by attacker.
+- [Risk Level] High
+
+- [Location] web/userRpm/AdvScrRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Confirmed reflected XSS vulnerability in form handling.
+- [Details] Direct document.write usage with user-controllable parameters (dosAttack, usIcmpFlood, bUdpFlood) in form elements without proper output encoding.
+- [Impact] Parameters can be manipulated in URL (GET method) and are reflected back in the page, creating clear reflected XSS vulnerability.
+- [Risk Level] High
+
+- [Location] web/userRpm/BasicSecurityRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Security settings submission function found with potential for manipulation.
+- [Details] doSave() function constructs URL with security parameters (stat=) by combining checkbox states without any validation. Uses bit shifting (<<) to combine settings into single numeric parameter.
+- [Impact] Could allow manipulation of security settings (SPI firewall, VPN passthrough, NAT ALGs) through direct URL parameter injection.
+- [Risk Level] High
+
+- [Location] web/userRpm/L2TPCfgRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Form uses GET method with password field, exposing credentials in URL.
+- [Details] Form uses GET method (method="get") while containing password field (L2TPPwd). Client-side validation for both username (L2TPName) and password (L2TPPwd) is commented out.
+- [Impact] Creates high risk of credential exposure through URL parameters and lack of input validation.
+- [Risk Level] Critical
+
+- [Location] web/userRpm/LanArpBindingListRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential Cross-Site Scripting (XSS) vulnerability via URL parameters.
+- [Details] JavaScript functions DoR() and DoDelete() construct URLs using user-controlled input (MAC address, IP address) without proper sanitization.
+- [Impact] Could allow attacker to inject malicious scripts via these parameters.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/LanBrModeRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Multiple security issues in network configuration form.
+- [Details] Form contains numerous security weaknesses: 1) Multiple VLAN configuration inputs without visible input validation 2) Hidden fields that control critical network settings 3) GET method form submission exposing sensitive parameters 4) No CSRF protection mechanisms visible 5) Ability to modify IGMP proxy settings.
+- [Impact] Could lead to unauthorized network configuration changes if exploited.
+- [Risk Level] High
+
+- [Location] web/userRpm/MailResultRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Mail configuration interface with potential credential handling risks.
+- [Details] JavaScript code contains multiple mail-related error messages including SMTP server connection issues and authentication errors.
+- [Impact] Suggests page handles sensitive SMTP credentials, though no direct credential exposure is visible.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/ParentCtrlAdvRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Confirmed XSS vulnerability in dynamic option generation with attacker-controllable array values.
+- [Details] JavaScript function printfLanLists() directly writes lan_pc_mac_dyn_array values into DOM using document.write() without sanitization. Array values are also directly assigned to form fields.
+- [Impact] Clear XSS vector if array values can be controlled by attacker.
+- [Risk Level] High
+
+- [Location] web/userRpm/PPPoECfgAdvRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Insufficient form validation in doSubmit() function.
+- [Details] doSubmit() function performs basic validation but has several security weaknesses: 1) Only validates when fields are not empty 2) checkname() function permits dangerous special characters 3) No validation for maximum length of inputs 4) No output encoding when displaying error messages 5) No CSRF protection mechanism.
+- [Impact] Potential for injection attacks and CSRF vulnerabilities.
+- [Risk Level] High
+
+- [Location] web/userRpm/QoSCfgRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential XSS vulnerability due to lack of input sanitization.
+- [Details] doSubmit() function performs basic numeric validation but doesn't sanitize user inputs before processing. Form uses GET method (method='get') which exposes parameters in URL.
+- [Impact] Potentially vulnerable to reflected XSS if inputs are not properly escaped when displayed back to users.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/UpdateTemp.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Multiple security issues found in JavaScript handling of tempPageInf array.
+- [Details] tempPageInf array is used in multiple security-sensitive contexts without proper validation: 1) Controls timeout duration 2) Determines displayed content 3) Controls page redirection.
+- [Impact] Potential for open redirect vulnerability and XSS if array values can be controlled by attacker.
+- [Risk Level] High
+
+- [Location] web/userRpm/UpnpCfgRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential CSRF vulnerability in UPnP configuration form.
+- [Details] Form allows enabling/disabling UPnP functionality without any apparent CSRF protection. Uses GET method which is particularly vulnerable to CSRF attacks.
+- [Impact] Could allow attacker to manipulate network port forwarding settings.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/VirtualServerAdvRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Insufficient input validation in port handling functions.
+- [Details] JavaScript validation functions (is_portcharacter, is_num, check_port) have weaknesses: 1) is_portcharacter allows '-' character 2) No validation of port number ranges (1-65535) 3) No proper IP address format validation.
+- [Impact] Could be bypassed to submit malicious input.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WlanAdvRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Multiple security concerns in form handling and validation.
+- [Details] 1. Form uses GET method exposing all parameters in URLs 2. Client-side validation can be bypassed 3. Form submits to itself suggesting potential for reflected XSS 4. Sensitive wireless configuration parameters are controllable via form inputs.
+- [Impact] Potential exposure of sensitive wireless configuration parameters and reflected XSS.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WlanStationRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Confirmed XSS and CSRF vulnerabilities with GET method form submission.
+- [Details] Form uses GET method (method="get") exposing parameters in URLs. Multiple instances of location.href construction with unvalidated parameters (nPage, vapIdx, ConfigMac).
+- [Impact] Creates XSS opportunities and CSRF vulnerability.
+- [Risk Level] High
+
+- [Location] web/userRpm/WorkingModeRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential CSRF vulnerability due to form submission without CSRF token.
+- [Details] Form submits to 'WorkingModeRpm.htm' using GET method without any CSRF protection mechanism.
+- [Impact] Could allow attackers to trick users into submitting unintended requests that change device's working mode.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WzdPPTPRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Client-side password handling with potential security issues.
+- [Details] Password fields are marked as type=password but form submission uses HTTP GET method exposing all parameters (including passwords) in URL. JavaScript performs client-side validation but doesn't prevent empty password submission.
+- [Impact] Exposure of PPTP credentials in URLs and potential bypass of client-side validation.
+- [Risk Level] Critical
+
+- [Location] web/userRpm/WzdWanDisconnRpm.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential security issue found in form action URL with GET method and hidden input field.
+- [Details] Form with action='WzdWanTypeRpm.htm' uses GET method and includes hidden input field 'ClientId'.
+- [Impact] Could potentially be manipulated to perform unauthorized actions if form processing is not properly secured.
+- [Risk Level] Medium
+
+- [Location] web/userRpm/WzdWlanRpm.htm
+- [Type] Credential
+- [Version Info] Unknown
+- [Description] Insecure password handling with client-side validation only.
+- [Details] Extensive client-side password validation for PSK passwords but lacks evidence of server-side validation. Password field (pskSecret) is populated and validated entirely in JavaScript.
+- [Impact] Vulnerable to bypassing client-side checks. Sensitive data exposure in URLs/logs.
+- [Risk Level] Critical
+'''
+'''
+- [Location] etc/rc.d/rcS
+- [Type] Configuration
+- [Version Info] Kernel version 2.6.15 (Multiple CVEs including CVE-2007-3380, CVE-2006-7229, CVE-2005-3784)
+- [Description] HTTP server started without security context and reference to potentially outdated kernel version
+- [Details] 1. /usr/bin/httpd started without security context or configuration details. 2. Commented out kernel module loading shows reference to kernel version 2.6.15 which has multiple known vulnerabilities
+- [Impact] Potential web service vulnerabilities and system risks if outdated kernel modules are loaded
+- [Risk Level] High
+'''
+'''
+- [Location] etc/rc.d/rc.wlan
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] The script loads kernel modules with environment variable-controlled parameters without proper input validation
+- [Details] Loads modules (ath_dfs.ko, ath_hal.ko) with parameters (DFS_domainoverride, DFS_usenol, ATH_countrycode) from environment variables without sanitization. Also sources /etc/ath/apcfg which may contain sensitive configurations.
+- [Impact] Potential insecure module configurations or parameter injection if environment variables are manipulated
+- [Risk Level] Medium
+'''
+'''
+- [Location] web/frames/top.htm
+- [Type] Vulnerability
+- [Version Info] Unknown
+- [Description] Potential XSS vulnerability via JavaScript functions that manipulate window properties and URLs without proper input validation
+- [Details] The JavaScript functions 'NewW()', 'ShowUrl()', and 'EraseUrl()' use the 'our_web_site' variable to construct URLs without proper validation or sanitization, which could be controlled by an attacker
+- [Impact] Potential cross-site scripting (XSS) attack if an attacker can control the 'our_web_site' value
+- [Risk Level] Medium
+'''
+'''
+- [Location] web/frames/top.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential security issues with JavaScript redirection and window manipulation
+- [Details] Contains functions for window manipulation (NewW, ShowUrl, EraseUrl) and redirection (LoadPage, LoadNewIp) that could be exploited if 'our_web_site' variable is attacker-controlled. Includes forced redirect when window.parent == window. Multiple instances of unvalidated URL redirection (window.location.href, window.open, parent.location.href) using 'url' and 'address' variables. 'address' variable used in parent.location.href redirection without initialization or validation.
+- [Impact] Potential for phishing attacks, malicious redirection, and open redirect vulnerabilities
+- [Risk Level] High
+
+- [Location] web/frames/top.htm
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Potential clickjacking vulnerability and unvalidated event handlers
+- [Details] Contains event handlers (onClick, onMouseOver, onMouseOut) executing JavaScript functions (NewW, ShowUrl, EraseUrl) without validation. document.oncontextmenu handler could disable right-click functionality. Inline JavaScript functions (NewW, ShowUrl, EraseUrl, Click) manipulate browser windows and URLs without proper security controls.
+- [Impact] Potential vectors for malicious activity and anti-debugging techniques
+- [Risk Level] Medium
+'''
+'''
+- [Location] lib/modules/2.6.31/net/umac.ko
+- [Type] Configuration
+- [Version Info] Unknown
+- [Description] Embedded IP address found in module strings
+- [Details] The IP address '10.2.162.3' appears in the context of Atheros/multi-bss functionality
+- [Impact] Hardcoded network configurations may be problematic if this is a management interface
+- [Risk Level] Medium
+
+- [Location] lib/modules/2.6.31/net/umac.ko
+- [Type] Other
+- [Version Info] Unknown
+- [Description] Network connection management functions and state machine implementation found
+- [Details] Contains extensive network connection management functionality including state transitions (CONNECTING, CONNECTED, DISCONNECTING), event handling, and interface management. Includes functions like 'ieee80211_connection_sm_assoc_sm_evhandler' and 'wlan_connection_sm_set_param'
+- [Impact] Complex network state machine could contain logic flaws if not properly implemented
+- [Risk Level] Medium
+'''
