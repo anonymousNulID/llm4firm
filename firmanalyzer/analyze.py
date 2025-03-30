@@ -185,7 +185,8 @@ Only analyze this file, do not analyze other files, other files will be analyzed
 1. Basic analysis:
    - strings <file> | grep -i "pattern": Extract and filter strings in files
    - strings <file> | grep -iE "pattern": Use regular expressions to filter
-
+   - objdump -D <file> | grep "pattern": Search for specific function calls
+   
 2. Text search:
    - strings <file> | grep -n -A 3 -B 3 "pattern": Search with line numbers and context 
    
@@ -201,16 +202,16 @@ Only analyze this file, do not analyze other files, other files will be analyzed
    - readelf -h <file>  # Check ELF header info, available in most cases
 
 5. Vulnerability search:
-   - vulnsearch <name> <version>: Search for all related CVE vulnerabilities(one component per search)   Example: vulnsearch busybox 1.36.1
+   - vulnsearch <name> <version>: Search for all related CVE vulnerabilities(executable or shared library)   Example: vulnsearch busybox 1.36.1
     When analyzing results:
     - Only include CVEs where the vulnerable version range INCLUDES the target version
     - Exclude CVEs that affect versions BEFORE the target version
     - List all CVEs that affect the target version do not omit any
-    
+
 6. Function analysis:
-   - disassembly <file>: Start disassembly mode to check for function calls (limited to one use,for executable and shared library)
+   - disassembly <file>: Start disassembly mode to check for function calls (Limited to one use)
    Use disassembly when the file meets the following criteria:
-   1. The file is an executable or shared library
+   1. The file is an executable binary
    2. The file has high-risk characteristics:
       - Network service related (e.g. httpd, ftpd, sshd)
       - System privileged programs (e.g. setuid/setgid binaries)
@@ -228,7 +229,7 @@ Only analyze this file, do not analyze other files, other files will be analyzed
    - Files without security critical features
    - Files that don't process external input
    
-   Example: disassembly busybox  # Only if busybox contains network services or privileged operations
+   Example: disassembly busybox 
 
 **Notes**
 1. Environment: Already in the directory of the file, execute commands directly, no need to change directory
