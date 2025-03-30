@@ -372,7 +372,6 @@ class R2Analyzer(cmd.Cmd):
                     score += 1.5 * position_weight 
                 
                 patterns = {
-                    'cgi': 35.0,
                     'main': 30.0,
                     'init': 25.0,
                     'handler': 22.0,
