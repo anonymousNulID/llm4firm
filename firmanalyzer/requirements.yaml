@@ -8,6 +8,10 @@ file_requirements:
       * Triggered by web forms, CGI, or JavaScript requests
       * Perform critical operations such as command execution, file manipulation, or network access
       * Contain dangerous function calls (e.g., system, strcpy, sprintf, popen)
+      
+      - Dynamic libraries or shared objects (.so):
+      * Files are shared object type (.so), or versioned links (e.g. libssl.so.1.0.2)
+      * Present in dependency chains of known components or executables
 
     - Network service components:
       * Contain socket, bind, listen functionality
@@ -32,7 +36,7 @@ file_requirements:
 
     - Exclusion scope (deprioritized or skipped):
       * Core system utilities (e.g., cp, mv, echo, cat) are not analyzed unless explicitly triggered with user-controlled input
-      * Static, unused libraries or non-executable resource files are considered low priority
+      * Static, unused resource files are considered low priority
 
 
 directory_requirements:
@@ -74,26 +78,25 @@ file_findings_requirements:
     **Analysis Workflow**
     0. Attack Surface Discovery
       - Check for user input paths (web forms, JS, network connections, file parameters)
+      - Check if component is running (started by init script, listening ports, daemon)
       - Check for input → dangerous function paths (system, strcpy etc.)
-      - Check if there are references to other paths in the firmware, or if this file configures, invokes, or depends on other components
 
     1. Information Discovery
-      - Detect passwords, keys, versions, interfaces, tokens and other sensitive info
+      - Detect versions(executable or shared library), passwords, keys, interfaces, tokens and other sensitive info
 
     2. Security Review
       - Check if services/ports are exposed
       - Check if configs allow unauthorized access or use weak encryption
       - Check if startup items load high-risk components
-      - Check if this configuration directly or indirectly affects the behavior or execution of other components
 
     3. Code Analysis
       - Find command execution functions, memory operation functions, input reading functions
       - Check if unvalidated input is used for dangerous operations
       - Track data flow to see if user input can affect system calls
 
-    4. Vulnerability Search
-      - Match CVEs (based on library/binary versions)
-      - Only list vulnerabilities with clear paths & loaded components
+    4. Vulnerability Search (Including Version Analysis)
+      - Match CVE vulnerabilities based on component versions (libraries or binaries)
+      - **Must list all CVEs matching loaded component versions even if no clear attack path is found**
 
     severity_rating:
       level_5_critical:
@@ -122,7 +125,7 @@ file_findings_requirements:
       level_3_medium:
         description: Vulnerability exists but exploit path unclear or uncontrollable
         examples:
-          - Known Vulnerable Component Loaded
+          - Known Version information or Vulnerable Component Loaded
           - Default Credentials or Weak Permissions
           - Exposed Configs with Limited Risk
           - Hardcoded Interface Info
