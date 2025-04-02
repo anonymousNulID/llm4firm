@@ -772,40 +772,68 @@ In such cases:
                 })
 
     def parse_llm_response(self, response: str) -> dict:
-
+        """Parse LLM response and extract JSON using regex"""
         self.disassembly_logger.info(f"[Parser] {response}")
         try:
-
-            json_pattern = r'```(?:json)?\s*(\{.*?\})\s*```'
-            matches = re.findall(json_pattern, response, re.DOTALL)
+            code_block_pattern = r'```(?:json)?\s*([\s\S]*?)\s*```'
+            code_blocks = re.findall(code_block_pattern, response, re.DOTALL)
             
-            if matches:
-
-                json_str = matches[-1].strip()
-            else:
-
-                json_str = response.strip()
+            if code_blocks:
+                for block in code_blocks:
+                    try:
+                        block = block.strip()
+                        result = json.loads(block)
+                        if isinstance(result, dict):
+                            return result
+                    except json.JSONDecodeError:
+                        continue
+                
+                for block in code_blocks:
+                    try:
+                        json_pattern = r'(\{(?:[^{}]|(?:\{[^{}]*\}))*\})'
+                        potential_jsons = re.findall(json_pattern, block, re.DOTALL)
+                        for potential_json in potential_jsons:
+                            try:
+                                result = json.loads(potential_json)
+                                if isinstance(result, dict):
+                                    return result
+                            except json.JSONDecodeError:
+                                continue
+                    except Exception:
+                        continue
             
-            result = json.loads(json_str)
-            if not isinstance(result, dict):
-                self.disassembly_logger.error("[Parser] Response is not a dictionary")
-                raise ValueError("Response is not a dictionary")
-            return result
-                  
+            try:
+                result = json.loads(response.strip())
+                if isinstance(result, dict):
+                    return result
+            except json.JSONDecodeError:
+                json_pattern = r'(\{(?:[^{}]|(?:\{[^{}]*\}))*\})'
+                potential_jsons = re.findall(json_pattern, response, re.DOTALL)
+                for potential_json in potential_jsons:
+                    try:
+                        result = json.loads(potential_json)
+                        if isinstance(result, dict):
+                            return result
+                    except json.JSONDecodeError:
+                        continue
+                
+                self.disassembly_logger.error("[Parser] Failed to extract valid JSON from response")
+                raise ValueError("No valid JSON found in response")
+
         except Exception as e:
-            error_msg = f"Parsing error: {str(e)}\nOriginal response: {response}..."
+            error_msg = f"Parsing error: {str(e)}\nOriginal response: {response[:200]}..."
             self.disassembly_logger.error(f"[Parser] {error_msg}")
             
-
             return {
                 "analysis": {
-                    "risk_level": "Unknown",
+                    "risk_level": "Unknown", 
                     "reason": error_msg,
                     "next_step": "Please provide your response in valid JSON format."
                 },
-                "commands": "None",  
+                "commands": "None",
                 "status": "continue"
             }
+      
         
     def execute_r2_command(self, cmd: str, timeout: int = 90) -> str:
         """Execute r2 command with timeout control and thread safety"""
